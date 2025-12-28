@@ -498,9 +498,13 @@
             }
 
             .support-section {
-                grid-template-columns: 250px 1fr 220px;
+                grid-template-columns: 250px 1fr auto;
                 gap: 35px;
                 padding: 30px 40px;
+            }
+
+            .qr-codes-container {
+                gap: 20px;
             }
         }
 
@@ -530,6 +534,11 @@
             .support-middle {
                 padding-bottom: 20px;
                 border-bottom: 2px dashed rgba(255, 154, 118, 0.3);
+            }
+
+            .qr-codes-container {
+                flex-direction: column;
+                gap: 20px;
             }
 
             .support-feature-list {
@@ -590,8 +599,19 @@
             }
 
             .qr-code-image {
-                max-width: 200px;
-                max-height: 200px;
+                max-width: 180px;
+                max-height: 180px;
+            }
+
+            .qr-codes-container {
+                flex-direction: row;
+                justify-content: center;
+                gap: 15px;
+                flex-wrap: wrap;
+            }
+
+            .qr-code-wrapper {
+                flex: 0 0 auto;
             }
         }
 
@@ -707,7 +727,7 @@
             position: relative;
             overflow: hidden;
             display: grid;
-            grid-template-columns: 280px 1fr 240px;
+            grid-template-columns: 280px 1fr auto;
             gap: 45px;
             align-items: center;
             border: 2px dashed rgba(255, 154, 118, 0.3);
@@ -767,6 +787,12 @@
             align-items: center;
         }
 
+        .qr-codes-container {
+            display: flex;
+            gap: 25px;
+            align-items: flex-start;
+        }
+
         .qr-code-wrapper {
             display: flex;
             flex-direction: column;
@@ -787,6 +813,17 @@
             color: #6d4c41;
             text-align: center;
             font-style: italic;
+        }
+
+        .qr-code-note {
+            font-size: 0.8rem;
+            color: #ff6b35;
+            text-align: center;
+            font-weight: 600;
+            margin-top: 5px;
+            padding: 4px 8px;
+            background: rgba(255, 107, 53, 0.1);
+            border-radius: 8px;
         }
 
         /* 支持区域角标 */
@@ -1367,7 +1404,7 @@
         <!-- 支持区域容器 -->
         <div class="support-container">
             <div class="support-section">
-                <span class="support-badge">❤️ 赞助</span>
+                <span class="support-badge">☕ 请喝一杯</span>
                 
                 <!-- 左侧：图标和标题区 -->
                 <div class="support-left">
@@ -1382,7 +1419,7 @@
                 <!-- 中间：说明和功能列表 -->
                 <div class="support-middle">
                     <p class="support-description">
-                        教师实验室的所有工具都是<strong>免费提供</strong>的！但运营需要持续投入（域名、服务器、开发维护）。您的每一份支持都将帮助我们开发更多实用工具。
+                        教师实验室的所有工具都是<strong>免费提供</strong>的！如果您觉得这些工具对您有帮助，不妨请开发者喝杯咖啡或可乐 ☕🥤，这将帮助我们持续运营和开发更多实用工具。每一份心意都让我们倍感温暖！
                     </p>
 
                     <div class="support-features">
@@ -1408,16 +1445,30 @@
                     </div>
 
                     <p class="support-note">感谢您的支持与理解 🙏</p>
+                    <p class="support-note" style="margin-top: 10px; font-size: 0.85rem; color: #8d6e63;">
+                        💡 后续我们可能会在页面下方展示一份感谢名单，记录每一位支持者的心意（可匿名）
+                    </p>
                 </div>
 
                 <!-- 右侧：二维码 -->
                 <div class="support-right">
-                    <div class="qr-code-wrapper">
-                        <div class="qr-code-title">扫码赞助</div>
-                        <div class="qr-code-container">
-                            <img src="61f4fd7026e8048e616e9322e0a497ea.jpg" alt="微信支付二维码" class="qr-code-image" id="qrCodeImage">
+                    <div class="qr-codes-container">
+                        <div class="qr-code-wrapper">
+                            <div class="qr-code-title">微信</div>
+                            <div class="qr-code-container">
+                                <img src="46ce2bf32c014ebebf5f2f77f886e10f.jpg" alt="微信支付二维码" class="qr-code-image" id="wechatQrCode">
+                            </div>
+                            <div class="qr-code-hint">请喝杯咖啡 ☕</div>
+                            <div class="qr-code-note">💡 付款时请备注</div>
                         </div>
-                        <div class="qr-code-hint">随意金额 · 心意最重要</div>
+                        <div class="qr-code-wrapper">
+                            <div class="qr-code-title">支付宝</div>
+                            <div class="qr-code-container">
+                                <img src="8cff7aed2bf8395a42bc9247e9f1cc63.jpg" alt="支付宝二维码" class="qr-code-image" id="alipayQrCode">
+                            </div>
+                            <div class="qr-code-hint">请喝杯可乐 🥤</div>
+                            <div class="qr-code-note">💡 付款时请备注</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1518,22 +1569,26 @@
         });
 
         // 二维码图片加载处理
-        const qrCodeImage = document.getElementById('qrCodeImage');
-        if (qrCodeImage) {
-            qrCodeImage.addEventListener('error', function() {
-                console.warn('二维码图片加载失败，请确保图片文件存在于项目根目录');
-                // 可以显示一个占位提示
+        const wechatQrCode = document.getElementById('wechatQrCode');
+        const alipayQrCode = document.getElementById('alipayQrCode');
+        
+        function handleQrCodeError(img, platform) {
+            img.addEventListener('error', function() {
+                console.warn(`${platform}二维码图片加载失败，请确保图片文件存在于项目根目录`);
                 this.style.display = 'none';
                 const container = this.parentElement;
                 if (container && !container.querySelector('.qr-placeholder')) {
                     const placeholder = document.createElement('div');
                     placeholder.className = 'qr-placeholder';
-                    placeholder.style.cssText = 'padding: 40px; color: #999; font-size: 0.9rem;';
-                    placeholder.textContent = '二维码图片加载失败，请检查文件路径';
+                    placeholder.style.cssText = 'padding: 40px; color: #999; font-size: 0.9rem; text-align: center;';
+                    placeholder.textContent = `${platform}二维码加载失败`;
                     container.appendChild(placeholder);
                 }
             });
         }
+        
+        if (wechatQrCode) handleQrCodeError(wechatQrCode, '微信');
+        if (alipayQrCode) handleQrCodeError(alipayQrCode, '支付宝');
 
         // 按钮涟漪效果
         document.querySelectorAll('.tool-link').forEach(button => {

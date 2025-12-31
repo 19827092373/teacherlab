@@ -1456,7 +1456,7 @@
                         <div class="qr-code-wrapper">
                             <div class="qr-code-title">支付宝</div>
                             <div class="qr-code-container">
-                                <img src="46ce2bf32c014ebebf5f2f77f886e10f.jpg" alt="微信支付二维码" class="qr-code-image" id="wechatQrCode">
+                                <img src="8cff7aed2bf8395a42bc9247e9f1cc63.jpg" alt="支付宝二维码" class="qr-code-image" id="alipayQrCode">
                             </div>
                             <div class="qr-code-hint">请喝杯咖啡 ☕</div>
                             <div class="qr-code-note">💡 付款时请备注</div>
@@ -1464,10 +1464,18 @@
                         <div class="qr-code-wrapper">
                             <div class="qr-code-title">微信</div>
                             <div class="qr-code-container">
-                                <img src="8cff7aed2bf8395a42bc9247e9f1cc63.jpg" alt="支付宝二维码" class="qr-code-image" id="alipayQrCode">
+                                <img src="46ce2bf32c014ebebf5f2f77f886e10f.jpg" alt="微信支付二维码" class="qr-code-image" id="wechatQrCode">
                             </div>
                             <div class="qr-code-hint">请喝杯可乐 🥤</div>
                             <div class="qr-code-note">💡 付款时请备注</div>
+                        </div>
+                        <div class="qr-code-wrapper">
+                            <div class="qr-code-title">微信好友</div>
+                            <div class="qr-code-container">
+                                <img src="weixinID.jpg" alt="微信好友二维码" class="qr-code-image" id="weixinFriendQrCode">
+                            </div>
+                            <div class="qr-code-hint">添加好友 💬</div>
+                            <div class="qr-code-note">💡 扫码添加微信</div>
                         </div>
                     </div>
                 </div>
@@ -1571,6 +1579,7 @@
         // 二维码图片加载处理
         const wechatQrCode = document.getElementById('wechatQrCode');
         const alipayQrCode = document.getElementById('alipayQrCode');
+        const weixinFriendQrCode = document.getElementById('weixinFriendQrCode');
         
         function handleQrCodeError(img, platform) {
             img.addEventListener('error', function() {
@@ -1587,8 +1596,9 @@
             });
         }
         
-        if (wechatQrCode) handleQrCodeError(wechatQrCode, '支付宝');
-        if (alipayQrCode) handleQrCodeError(alipayQrCode, '微信');
+        if (alipayQrCode) handleQrCodeError(alipayQrCode, '支付宝');
+        if (wechatQrCode) handleQrCodeError(wechatQrCode, '微信');
+        if (weixinFriendQrCode) handleQrCodeError(weixinFriendQrCode, '微信好友');
 
         // 按钮涟漪效果
         document.querySelectorAll('.tool-link').forEach(button => {

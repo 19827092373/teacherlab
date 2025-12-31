@@ -498,13 +498,18 @@
             }
 
             .support-section {
-                grid-template-columns: 250px 1fr auto;
-                gap: 35px;
-                padding: 30px 40px;
+                grid-template-columns: 200px 1fr auto;
+                gap: 25px;
+                padding: 25px 30px;
             }
 
             .qr-codes-container {
-                gap: 20px;
+                gap: 15px;
+            }
+
+            .qr-code-image {
+                max-width: 130px;
+                max-height: 130px;
             }
         }
 
@@ -521,24 +526,26 @@
 
             .support-section {
                 grid-template-columns: 1fr;
-                gap: 25px;
-                padding: 35px;
+                gap: 20px;
+                padding: 25px;
                 text-align: center;
             }
 
             .support-left {
-                padding-bottom: 20px;
+                padding-bottom: 15px;
                 border-bottom: 2px dashed rgba(255, 154, 118, 0.3);
             }
 
             .support-middle {
-                padding-bottom: 20px;
+                padding-bottom: 15px;
                 border-bottom: 2px dashed rgba(255, 154, 118, 0.3);
             }
 
             .qr-codes-container {
-                flex-direction: column;
-                gap: 20px;
+                flex-direction: row;
+                justify-content: center;
+                gap: 15px;
+                flex-wrap: wrap;
             }
 
             .support-feature-list {
@@ -599,14 +606,14 @@
             }
 
             .qr-code-image {
-                max-width: 180px;
-                max-height: 180px;
+                max-width: 120px;
+                max-height: 120px;
             }
 
             .qr-codes-container {
                 flex-direction: row;
                 justify-content: center;
-                gap: 15px;
+                gap: 12px;
                 flex-wrap: wrap;
             }
 
@@ -721,15 +728,15 @@
         .support-section {
             background: linear-gradient(135deg, #fff9f0 0%, #ffe8d6 100%);
             border-radius: 20px;
-            padding: 35px 45px;
+            padding: 25px 35px;
             box-shadow: 0 10px 40px rgba(255, 154, 118, 0.2);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             overflow: hidden;
             display: grid;
-            grid-template-columns: 280px 1fr auto;
-            gap: 45px;
-            align-items: center;
+            grid-template-columns: 220px 1fr auto;
+            gap: 30px;
+            align-items: flex-start;
             border: 2px dashed rgba(255, 154, 118, 0.3);
             min-height: auto;
         }
@@ -743,11 +750,12 @@
         }
 
         .support-left .support-icon {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .support-left .support-title {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
+            font-size: 1.5rem;
         }
 
         .support-left .tool-tags {
@@ -761,23 +769,26 @@
         .support-middle {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 16px;
         }
 
         .support-middle .support-description {
             margin-bottom: 0;
+            font-size: 0.95rem;
+            line-height: 1.7;
         }
 
         .support-middle .support-note {
             margin-top: 0;
-            padding-top: 15px;
+            padding-top: 12px;
             border-top: 1px solid rgba(255, 154, 118, 0.3);
+            font-size: 0.85rem;
         }
 
         .support-feature-list {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 8px;
+            gap: 6px;
         }
 
         /* 右侧区域 */
@@ -789,7 +800,7 @@
 
         .qr-codes-container {
             display: flex;
-            gap: 25px;
+            gap: 18px;
             align-items: flex-start;
         }
 
@@ -797,33 +808,34 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
             transition: transform 0.3s ease;
         }
 
         .qr-code-title {
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 700;
             color: #ff6b35;
             text-align: center;
+            margin-bottom: 2px;
         }
 
         .qr-code-hint {
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             color: #6d4c41;
             text-align: center;
             font-style: italic;
         }
 
         .qr-code-note {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             color: #ff6b35;
             text-align: center;
             font-weight: 600;
-            margin-top: 5px;
-            padding: 4px 8px;
+            margin-top: 2px;
+            padding: 3px 6px;
             background: rgba(255, 107, 53, 0.1);
-            border-radius: 8px;
+            border-radius: 6px;
         }
 
         /* 支持区域角标 */
@@ -868,14 +880,14 @@
         }
 
         .support-icon {
-            width: 70px;
-            height: 70px;
-            border-radius: 15px;
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.5rem;
-            margin: 0 auto 20px;
+            font-size: 2rem;
+            margin: 0 auto 12px;
             background: linear-gradient(135deg, #ffd89b 0%, #ff9a76 100%);
             color: white;
             box-shadow: 0 5px 20px rgba(255, 154, 118, 0.5);
@@ -883,42 +895,42 @@
         }
 
         .support-title {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: #d9534f;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             text-shadow: 1px 1px 3px rgba(255, 154, 118, 0.2);
         }
 
         .support-description {
-            font-size: 1rem;
+            font-size: 0.95rem;
             color: #6d4c41;
-            line-height: 1.8;
-            margin-bottom: 25px;
+            line-height: 1.7;
+            margin-bottom: 0;
         }
 
         .support-features {
             background: rgba(255, 255, 255, 0.7);
-            padding: 18px;
+            padding: 14px;
             border-radius: 12px;
             text-align: left;
             border: 1px solid rgba(255, 154, 118, 0.2);
         }
 
         .support-features-title {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 700;
             color: #ff6b35;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             text-align: left;
         }
 
         .support-feature-item {
             display: flex;
             align-items: center;
-            gap: 8px;
-            margin-bottom: 8px;
-            font-size: 0.85rem;
+            gap: 6px;
+            margin-bottom: 6px;
+            font-size: 0.8rem;
             color: #5a6c7d;
         }
 
@@ -936,9 +948,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 15px;
+            padding: 10px;
             background: white;
-            border-radius: 15px;
+            border-radius: 12px;
             box-shadow: 0 5px 20px rgba(255, 154, 118, 0.3);
             position: relative;
             overflow: hidden;
@@ -968,15 +980,15 @@
         }
 
         .qr-code-image {
-            max-width: 180px;
-            max-height: 180px;
+            max-width: 140px;
+            max-height: 140px;
             width: 100%;
             height: auto;
-            border-radius: 10px;
+            border-radius: 8px;
             display: block;
             object-fit: contain;
             background: white;
-            padding: 8px;
+            padding: 6px;
             position: relative;
             z-index: 1;
             transition: transform 0.3s ease;
@@ -987,16 +999,18 @@
         }
 
         .support-note {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #7f8c8d;
             font-style: italic;
-            margin-top: 15px;
+            margin-top: 0;
+            line-height: 1.5;
         }
 
         /* 支持区域内的 note 特殊样式 */
         .support-section .support-note {
             color: #d9534f;
             font-weight: 600;
+            font-size: 0.8rem;
         }
 
         /* 页面加载进度条 */
@@ -1419,7 +1433,7 @@
                 <!-- 中间：说明和功能列表 -->
                 <div class="support-middle">
                     <p class="support-description">
-                        教师实验室的所有工具都是<strong>免费提供</strong>的！如果您觉得这些工具对您有帮助，不妨请开发者喝杯咖啡或可乐 ☕🥤，这将帮助我们持续运营和开发更多实用工具。每一份心意都让我们倍感温暖！
+                        教师实验室的所有工具都是<strong>免费提供</strong>的！如果您觉得这些工具对您有帮助，不妨请开发者喝杯咖啡或可乐 ☕🥤，这将帮助我们持续运营和开发更多实用工具。
                     </p>
 
                     <div class="support-features">
@@ -1445,9 +1459,6 @@
                     </div>
 
                     <p class="support-note">感谢您的支持与理解 🙏</p>
-                    <p class="support-note" style="margin-top: 10px; font-size: 0.85rem; color: #8d6e63;">
-                        💡 后续我们可能会在页面下方展示一份感谢名单，记录每一位支持者的心意（可匿名）
-                    </p>
                 </div>
 
                 <!-- 右侧：二维码 -->

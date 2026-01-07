@@ -1,0 +1,24 @@
+# Git 相关
+.git/
+
+# 编辑器相关
+.cursor/
+*.cursorrule
+
+# 文档和配置文件（不需要部署到服务器）
+*.md
+!教师实验室介绍稿.md
+*.conf
+*.sh
+
+# 其他工具文件夹（这些是独立的仓库）
+习题转ppt/
+背诵管理/
+错题统计/
+teacherelab/
+
+# 系统文件
+.user.ini
+.DS_Store
+Thumbs.db
+

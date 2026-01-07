@@ -18,4 +18,16 @@ jobs:
           source: "."
           target: "/www/wwwroot/teacherlab.cn"
           rm: false
+          overwrite: true
+          strip_components: 0
+      
+      - name: Clean up .github folder on server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: root
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            rm -rf /www/wwwroot/teacherlab.cn/.github
+            rm -rf /www/wwwroot/teacherlab.cn/.gitignore
 

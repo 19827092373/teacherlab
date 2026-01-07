@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>教师实验室 - Teacher Lab</title>
+    <title>个人学习工具展示 - 物理教学辅助小工具</title>
     <style>
         * {
             margin: 0;
@@ -478,6 +478,7 @@
             padding: 30px 20px;
             margin-top: 40px;
             font-size: 0.95rem;
+            line-height: 1.8;
         }
 
         footer a {
@@ -489,6 +490,11 @@
         footer a:hover {
             color: white;
             text-decoration: underline;
+        }
+
+        footer .icp-link {
+            font-size: 0.95rem;
+            font-weight: 500;
         }
 
         /* 响应式设计 */
@@ -1151,8 +1157,8 @@
 
     <div class="container">
         <header>
-            <h1>🎓 教师实验室</h1>
-            <p class="subtitle">Teacher Lab - 让教学更高效，让工具更智能</p>
+            <h1>个人学习工具展示</h1>
+            <p class="subtitle">物理教学辅助小工具</p>
             <div class="developer-info">
                 <div class="developer-badge">
                     <span class="developer-icon">👨‍💻</span>
@@ -1179,7 +1185,7 @@
 
         <div class="tools-grid">
             <!-- 工具1: 习题转PPT -->
-            <div class="tool-card" onclick="window.open('https://tool1.teacherlab.top', '_blank')">
+            <div class="tool-card" onclick="window.open('https://ppt.teacherlab.cn', '_blank')">
                 <span class="new-badge">NEW</span>
                 <div class="tool-icon">📄</div>
                 <h2 class="tool-title">PDF 习题转 PPT 工具</h2>
@@ -1250,11 +1256,11 @@
                     </div>
                 </div>
 
-                <a href="https://tool1.teacherlab.top" class="tool-link" target="_blank" onclick="event.stopPropagation()">立即使用 →</a>
+                <a href="https://ppt.teacherlab.cn" class="tool-link" target="_blank" onclick="event.stopPropagation()">立即使用 →</a>
             </div>
 
             <!-- 工具2: 背诵管理 -->
-            <div class="tool-card" onclick="window.open('https://tool3.teacherlab.top', '_blank')">
+            <div class="tool-card" onclick="window.open('https://recitation.teacherlab.cn', '_blank')">
                 <div class="tool-icon">📚</div>
                 <h2 class="tool-title">背诵任务管理系统</h2>
                 
@@ -1332,11 +1338,11 @@
                     </div>
                 </div>
 
-                <a href="https://tool3.teacherlab.top" class="tool-link" target="_blank" onclick="event.stopPropagation()">立即使用 →</a>
+                <a href="https://recitation.teacherlab.cn" class="tool-link" target="_blank" onclick="event.stopPropagation()">立即使用 →</a>
             </div>
 
             <!-- 工具3: 错题统计 -->
-            <div class="tool-card" onclick="window.open('https://tool2.teacherlab.top', '_blank')">
+            <div class="tool-card" onclick="window.open('https://mistakes.teacherlab.cn', '_blank')">
                 <div class="tool-icon">📊</div>
                 <h2 class="tool-title">课堂错题统计系统</h2>
                 
@@ -1414,92 +1420,22 @@
                     </div>
                 </div>
 
-                <a href="https://tool2.teacherlab.top" class="tool-link" target="_blank" onclick="event.stopPropagation()">立即使用 →</a>
+                <a href="https://mistakes.teacherlab.cn" class="tool-link" target="_blank" onclick="event.stopPropagation()">立即使用 →</a>
             </div>
         </div>
 
-        <!-- 支持区域容器 -->
-        <div class="support-container">
-            <div class="support-section">
-                <span class="support-badge">☕ 请喝一杯</span>
-                
-                <!-- 左侧：图标和标题区 -->
-                <div class="support-left">
-                    <div class="support-icon">💝</div>
-                    <h2 class="support-title">支持我们</h2>
-                    <div class="tool-tags">
-                        <span class="tag" style="background: rgba(255, 154, 118, 0.2); color: #ff6b35; font-weight: 700;">自愿赞助</span>
-                        <span class="tag" style="background: rgba(255, 154, 118, 0.2); color: #ff6b35; font-weight: 700;">持续运营</span>
-                    </div>
-                </div>
-                
-                <!-- 中间：说明和功能列表 -->
-                <div class="support-middle">
-                    <p class="support-description">
-                        教师实验室的所有工具都是<strong>免费提供</strong>的！如果您觉得这些工具对您有帮助，不妨请开发者喝杯咖啡或可乐 ☕🥤，这将帮助我们持续运营和开发更多实用工具。
-                    </p>
-
-                    <div class="support-features">
-                        <div class="support-features-title">💰 您的支持将用于</div>
-                        <div class="support-feature-list">
-                            <div class="support-feature-item">
-                                <span class="support-feature-icon">🌐</span>
-                                <span>域名续费和服务器维护</span>
-                            </div>
-                            <div class="support-feature-item">
-                                <span class="support-feature-icon">⚡</span>
-                                <span>工具性能优化和升级</span>
-                            </div>
-                            <div class="support-feature-item">
-                                <span class="support-feature-icon">🔧</span>
-                                <span>开发更多实用教学工具</span>
-                            </div>
-                            <div class="support-feature-item">
-                                <span class="support-feature-icon">🐛</span>
-                                <span>Bug修复和功能改进</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <p class="support-note">感谢您的支持与理解 🙏</p>
-                </div>
-
-                <!-- 右侧：二维码 -->
-                <div class="support-right">
-                    <div class="qr-codes-container">
-                        <div class="qr-code-wrapper">
-                            <div class="qr-code-title">支付宝</div>
-                            <div class="qr-code-container">
-                                <img src="8cff7aed2bf8395a42bc9247e9f1cc63.jpg" alt="支付宝二维码" class="qr-code-image" id="alipayQrCode">
-                            </div>
-                            <div class="qr-code-hint">请喝杯咖啡 ☕</div>
-                            <div class="qr-code-note">💡 付款时请备注</div>
-                        </div>
-                        <div class="qr-code-wrapper">
-                            <div class="qr-code-title">微信</div>
-                            <div class="qr-code-container">
-                                <img src="46ce2bf32c014ebebf5f2f77f886e10f.jpg" alt="微信支付二维码" class="qr-code-image" id="wechatQrCode">
-                            </div>
-                            <div class="qr-code-hint">请喝杯可乐 🥤</div>
-                            <div class="qr-code-note">💡 付款时请备注</div>
-                        </div>
-                        <div class="qr-code-wrapper">
-                            <div class="qr-code-title">微信好友</div>
-                            <div class="qr-code-container">
-                                <img src="weixinID.jpg" alt="微信好友二维码" class="qr-code-image" id="weixinFriendQrCode">
-                            </div>
-                            <div class="qr-code-hint">添加好友 💬</div>
-                            <div class="qr-code-note">💡 扫码添加微信</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         </div>
 
         <footer>
-            <p>教师实验室 © 2025 | 持续更新中，更多工具即将上线</p>
-            <p class="expand-note">💡 提示：本平台将持续扩展，欢迎关注更新</p>
+            <p>个人学习工具展示 © 2025 | 仅供个人教学研究使用</p>
+            <p style="margin-top: 12px;">
+                <a href="https://beian.miit.gov.cn" target="_blank" rel="noopener noreferrer" class="icp-link">
+                    苏ICP备2026000946号-1
+                </a>
+            </p>
+            <p style="margin-top: 10px; font-size: 0.85rem; color: rgba(255, 255, 255, 0.85);">
+                不良信息举报邮箱：<a href="mailto:2744467183@qq.com">2744467183@qq.com</a>
+            </p>
         </footer>
     </div>
 
@@ -1568,8 +1504,8 @@
                 observer.observe(statsOverview);
             }
 
-            // 添加卡片加载动画（包括支持区域）
-            const cards = document.querySelectorAll('.tool-card, .support-section');
+            // 添加卡片加载动画
+            const cards = document.querySelectorAll('.tool-card');
             cards.forEach((card, index) => {
                 card.style.animationDelay = `${index * 0.1}s`;
                 card.classList.add('loading');
@@ -1590,29 +1526,6 @@
             });
         });
 
-        // 二维码图片加载处理
-        const wechatQrCode = document.getElementById('wechatQrCode');
-        const alipayQrCode = document.getElementById('alipayQrCode');
-        const weixinFriendQrCode = document.getElementById('weixinFriendQrCode');
-        
-        function handleQrCodeError(img, platform) {
-            img.addEventListener('error', function() {
-                console.warn(`${platform}二维码图片加载失败，请确保图片文件存在于项目根目录`);
-                this.style.display = 'none';
-                const container = this.parentElement;
-                if (container && !container.querySelector('.qr-placeholder')) {
-                    const placeholder = document.createElement('div');
-                    placeholder.className = 'qr-placeholder';
-                    placeholder.style.cssText = 'padding: 40px; color: #999; font-size: 0.9rem; text-align: center;';
-                    placeholder.textContent = `${platform}二维码加载失败`;
-                    container.appendChild(placeholder);
-                }
-            });
-        }
-        
-        if (alipayQrCode) handleQrCodeError(alipayQrCode, '支付宝');
-        if (wechatQrCode) handleQrCodeError(wechatQrCode, '微信');
-        if (weixinFriendQrCode) handleQrCodeError(weixinFriendQrCode, '微信好友');
 
         // 按钮涟漪效果
         document.querySelectorAll('.tool-link').forEach(button => {
@@ -1682,7 +1595,7 @@
                 cursor.style.top = e.clientY - 10 + 'px';
             });
 
-            document.querySelectorAll('.tool-card, .support-section, .tool-link').forEach(el => {
+            document.querySelectorAll('.tool-card, .tool-link').forEach(el => {
                 el.addEventListener('mouseenter', () => {
                     cursor.style.transform = 'scale(2)';
                 });

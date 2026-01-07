@@ -1,0 +1,91 @@
+{"location":"ClassSelector.vue:handleAddClass","message":"handleAddClass called","data":{"name":"22","appStateExists":true,"addClassExists":true},"timestamp":1767016878139,"sessionId":"debug-session","runId":"run1","hypothesisId":"A"}
+{"location":"ClassSelector.vue:handleAddClass","message":"calling addClass","data":{"name":"22"},"timestamp":1767016878140,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"useAppState.js:addClass","message":"addClass entry","data":{"className":"22","classesCount":1},"timestamp":1767016878140,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"useAppState.js:addClass","message":"generated newClassId","data":{"newClassId":2},"timestamp":1767016878140,"sessionId":"debug-session","runId":"run1","hypothesisId":"E"}
+{"location":"useAppState.js:addClass","message":"class pushed","data":{"classesCount":2,"newClassId":2},"timestamp":1767016878140,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"useAppState.js:addClass","message":"addClass exit","data":{"currentClassId":2},"timestamp":1767016878140,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"ClassSelector.vue:handleAddClass","message":"addClass completed","data":{},"timestamp":1767016878141,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"ClassSelector.vue:handleAddClass","message":"handleAddClass called","data":{"name":"九9","appStateExists":true,"addClassExists":true},"timestamp":1767016908665,"sessionId":"debug-session","runId":"run1","hypothesisId":"A"}
+{"location":"ClassSelector.vue:handleAddClass","message":"calling addClass","data":{"name":"九9"},"timestamp":1767016908665,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"useAppState.js:addClass","message":"addClass entry","data":{"className":"九9","classesCount":2},"timestamp":1767016908665,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"useAppState.js:addClass","message":"class pushed","data":{"classesCount":3,"newClassId":3},"timestamp":1767016908666,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"useAppState.js:addClass","message":"addClass exit","data":{"currentClassId":3},"timestamp":1767016908666,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"useAppState.js:addClass","message":"generated newClassId","data":{"newClassId":3},"timestamp":1767016908666,"sessionId":"debug-session","runId":"run1","hypothesisId":"E"}
+{"location":"ClassSelector.vue:handleAddClass","message":"addClass completed","data":{},"timestamp":1767016908666,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"TaskTabs.vue:handleAddTask","message":"handleAddTask called","data":{"appStateExists":true,"addTaskExists":true,"currentClass":true},"timestamp":1767016911266,"sessionId":"debug-session","runId":"run1","hypothesisId":"A"}
+{"location":"TaskTabs.vue:handleAddTask","message":"prompt result","data":{"hasContent":false},"timestamp":1767016912457,"sessionId":"debug-session","runId":"run1","hypothesisId":"D"}
+{"location":"TaskTabs.vue:handleAddTask","message":"handleAddTask called","data":{"appStateExists":true,"addTaskExists":true,"currentClass":true},"timestamp":1767016913820,"sessionId":"debug-session","runId":"run1","hypothesisId":"A"}
+{"location":"TaskTabs.vue:handleAddTask","message":"prompt result","data":{"hasContent":true,"content":"unit1"},"timestamp":1767016921624,"sessionId":"debug-session","runId":"run1","hypothesisId":"D"}
+{"location":"TaskTabs.vue:handleAddTask","message":"calling addTask","data":{"content":"unit1","currentClassTasksCount":1},"timestamp":1767016921624,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"useAppState.js:addTask","message":"addTask entry","data":{"content":"unit1","currentClassExists":true},"timestamp":1767016921624,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"useAppState.js:addTask","message":"addTask exit","data":{"currentTaskId":2},"timestamp":1767016921625,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"useAppState.js:addTask","message":"generated newTaskId","data":{"newTaskId":2,"tasksCount":1},"timestamp":1767016921624,"sessionId":"debug-session","runId":"run1","hypothesisId":"E"}
+{"location":"useAppState.js:addTask","message":"task pushed","data":{"tasksCount":2,"newTaskId":2},"timestamp":1767016921624,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"TaskTabs.vue:handleAddTask","message":"addTask completed","data":{"currentClassTasksCount":2},"timestamp":1767016921625,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"ClassSelector.vue:handleAddClass","message":"handleAddClass called","data":{"name":"九9","appStateExists":true,"addClassExists":true},"timestamp":1767016934680,"sessionId":"debug-session","runId":"run1","hypothesisId":"A"}
+{"location":"ClassSelector.vue:handleAddClass","message":"calling addClass","data":{"name":"九9"},"timestamp":1767016934680,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"useAppState.js:addClass","message":"addClass entry","data":{"className":"九9","classesCount":3},"timestamp":1767016934680,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"useAppState.js:addClass","message":"generated newClassId","data":{"newClassId":4},"timestamp":1767016934680,"sessionId":"debug-session","runId":"run1","hypothesisId":"E"}
+{"location":"useAppState.js:addClass","message":"class pushed","data":{"classesCount":4,"newClassId":4},"timestamp":1767016934680,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"useAppState.js:addClass","message":"addClass exit","data":{"currentClassId":4},"timestamp":1767016934680,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"ClassSelector.vue:handleAddClass","message":"addClass completed","data":{},"timestamp":1767016934681,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"ClassSelector.vue:handleAddClass","message":"calling addClass","data":{"name":"九9"},"timestamp":1767017085592,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"ClassSelector.vue:handleAddClass","message":"handleAddClass called","data":{"name":"九9","appStateExists":true,"addClassExists":true},"timestamp":1767017085592,"sessionId":"debug-session","runId":"run1","hypothesisId":"A"}
+{"location":"useAppState.js:addClass","message":"addClass entry","data":{"className":"九9","classesCount":1},"timestamp":1767017085592,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"useAppState.js:addClass","message":"generated newClassId","data":{"newClassId":2},"timestamp":1767017085592,"sessionId":"debug-session","runId":"run1","hypothesisId":"E"}
+{"location":"useAppState.js:addClass","message":"class pushed","data":{"classesCount":2,"newClassId":2},"timestamp":1767017085593,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"ClassSelector.vue:handleAddClass","message":"addClass completed","data":{},"timestamp":1767017085593,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"useAppState.js:addClass","message":"addClass exit","data":{"currentClassId":2},"timestamp":1767017085593,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"ClassSelector.vue:handleAddClass","message":"handleAddClass called","data":{"name":"测试班级","appStateExists":true,"addClassExists":true},"timestamp":1767017094628,"sessionId":"debug-session","runId":"run1","hypothesisId":"A"}
+{"location":"useAppState.js:addClass","message":"addClass entry","data":{"className":"测试班级","classesCount":2},"timestamp":1767017094629,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"ClassSelector.vue:handleAddClass","message":"calling addClass","data":{"name":"测试班级"},"timestamp":1767017094629,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"useAppState.js:addClass","message":"generated newClassId","data":{"newClassId":3},"timestamp":1767017094629,"sessionId":"debug-session","runId":"run1","hypothesisId":"E"}
+{"location":"useAppState.js:addClass","message":"class pushed","data":{"classesCount":3,"newClassId":3},"timestamp":1767017094629,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"useAppState.js:addClass","message":"addClass exit","data":{"currentClassId":3},"timestamp":1767017094629,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"ClassSelector.vue:handleAddClass","message":"addClass completed","data":{},"timestamp":1767017094629,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"TaskTabs.vue:handleAddTask","message":"handleAddTask called","data":{"appStateExists":true,"addTaskExists":true,"currentClass":true},"timestamp":1767017097003,"sessionId":"debug-session","runId":"run1","hypothesisId":"A"}
+{"location":"TaskTabs.vue:handleAddTask","message":"prompt result","data":{"hasContent":true,"content":"测试任务"},"timestamp":1767017104371,"sessionId":"debug-session","runId":"run1","hypothesisId":"D"}
+{"location":"TaskTabs.vue:handleAddTask","message":"calling addTask","data":{"content":"测试任务","currentClassTasksCount":1},"timestamp":1767017104371,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"useAppState.js:addTask","message":"generated newTaskId","data":{"newTaskId":2,"tasksCount":1},"timestamp":1767017104371,"sessionId":"debug-session","runId":"run1","hypothesisId":"E"}
+{"location":"useAppState.js:addTask","message":"addTask exit","data":{"currentTaskId":2},"timestamp":1767017104372,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"useAppState.js:addTask","message":"addTask entry","data":{"content":"测试任务","currentClassExists":true},"timestamp":1767017104371,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"useAppState.js:addTask","message":"task pushed","data":{"tasksCount":2,"newTaskId":2},"timestamp":1767017104372,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"TaskTabs.vue:handleAddTask","message":"addTask completed","data":{"currentClassTasksCount":2},"timestamp":1767017104372,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"ImportStudents.vue:handleConfirmImport","message":"handleConfirmImport called","data":{"importTextLength":218,"hasAppState":true,"hasImportStudents":true},"timestamp":1767017259156,"sessionId":"debug-session","runId":"run2","hypothesisId":"A"}
+{"location":"ImportStudents.vue:handleConfirmImport","message":"calling importStudents","data":{"importText":"姓名\n孙绮姗\n陈文婧\n朱景胜\n茆雯\n孟德雯\n朱佳怡\n裴子涵\n孙缌语\n孙令果\n赵梦媛\n谈兆妍\n张福玉\n","currentStudentsCount":0},"timestamp":1767017259157,"sessionId":"debug-session","runId":"run2","hypothesisId":"B"}
+{"location":"useAppState.js:importStudents","message":"importStudents entry","data":{"studentNamesLength":217,"currentClassExists":true,"currentTaskExists":true},"timestamp":1767017259157,"sessionId":"debug-session","runId":"run2","hypothesisId":"B"}
+{"location":"useAppState.js:importStudents","message":"parsed lines","data":{"linesCount":57,"firstFewLines":["姓名","孙绮姗","陈文婧"]},"timestamp":1767017259157,"sessionId":"debug-session","runId":"run2","hypothesisId":"D"}
+{"location":"useAppState.js:importStudents","message":"updated task students","data":{"taskStudentsCount":57},"timestamp":1767017259158,"sessionId":"debug-session","runId":"run2","hypothesisId":"B"}
+{"location":"useAppState.js:importStudents","message":"importStudents exit","data":{"success":true},"timestamp":1767017259158,"sessionId":"debug-session","runId":"run2","hypothesisId":"B"}
+{"location":"ImportStudents.vue:handleConfirmImport","message":"importStudents completed","data":{"success":true,"currentStudentsCount":57},"timestamp":1767017259158,"sessionId":"debug-session","runId":"run2","hypothesisId":"B"}
+{"location":"useAppState.js:importStudents","message":"updated class students","data":{"classStudentsCount":57},"timestamp":1767017259158,"sessionId":"debug-session","runId":"run2","hypothesisId":"B"}
+{"location":"ClassSelector.vue:handleAddClass","message":"handleAddClass called","data":{"name":"九9","appStateExists":true,"addClassExists":true},"timestamp":1767017290540,"sessionId":"debug-session","runId":"run1","hypothesisId":"A"}
+{"location":"ClassSelector.vue:handleAddClass","message":"calling addClass","data":{"name":"九9"},"timestamp":1767017290540,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"useAppState.js:addClass","message":"generated newClassId","data":{"newClassId":4},"timestamp":1767017290541,"sessionId":"debug-session","runId":"run1","hypothesisId":"E"}
+{"location":"useAppState.js:addClass","message":"class pushed","data":{"classesCount":4,"newClassId":4},"timestamp":1767017290541,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"useAppState.js:addClass","message":"addClass exit","data":{"currentClassId":4},"timestamp":1767017290541,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"useAppState.js:addClass","message":"addClass entry","data":{"className":"九9","classesCount":3},"timestamp":1767017290541,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"ClassSelector.vue:handleAddClass","message":"addClass completed","data":{},"timestamp":1767017290541,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"ImportStudents.vue:handleConfirmImport","message":"handleConfirmImport called","data":{"importTextLength":218,"hasAppState":true,"hasImportStudents":true},"timestamp":1767017311654,"sessionId":"debug-session","runId":"run2","hypothesisId":"A"}
+{"location":"useAppState.js:importStudents","message":"importStudents entry","data":{"studentNamesLength":217,"currentClassExists":true,"currentTaskExists":true},"timestamp":1767017311655,"sessionId":"debug-session","runId":"run2","hypothesisId":"B"}
+{"location":"ImportStudents.vue:handleConfirmImport","message":"calling importStudents","data":{"importText":"姓名\n孙绮姗\n陈文婧\n朱景胜\n茆雯\n孟德雯\n朱佳怡\n裴子涵\n孙缌语\n孙令果\n赵梦媛\n谈兆妍\n张福玉\n","currentStudentsCount":0},"timestamp":1767017311654,"sessionId":"debug-session","runId":"run2","hypothesisId":"B"}
+{"location":"useAppState.js:importStudents","message":"parsed lines","data":{"linesCount":57,"firstFewLines":["姓名","孙绮姗","陈文婧"]},"timestamp":1767017311655,"sessionId":"debug-session","runId":"run2","hypothesisId":"D"}
+{"location":"useAppState.js:importStudents","message":"updated class students","data":{"classStudentsCount":57},"timestamp":1767017311655,"sessionId":"debug-session","runId":"run2","hypothesisId":"B"}
+{"location":"ImportStudents.vue:handleConfirmImport","message":"importStudents completed","data":{"success":true,"currentStudentsCount":57},"timestamp":1767017311655,"sessionId":"debug-session","runId":"run2","hypothesisId":"B"}
+{"location":"useAppState.js:importStudents","message":"importStudents exit","data":{"success":true},"timestamp":1767017311655,"sessionId":"debug-session","runId":"run2","hypothesisId":"B"}
+{"location":"useAppState.js:importStudents","message":"updated task students","data":{"taskStudentsCount":57},"timestamp":1767017311655,"sessionId":"debug-session","runId":"run2","hypothesisId":"B"}
+{"location":"useAppState.js:watch","message":"watch triggered","data":{"classesCount":4,"currentClassId":3},"timestamp":1767017462472,"sessionId":"debug-session","runId":"run3","hypothesisId":"F"}
+{"location":"useAppState.js:watch","message":"saving to storage","data":{"classesCount":4},"timestamp":1767017463505,"sessionId":"debug-session","runId":"run3","hypothesisId":"F"}
+{"location":"useAppState.js:watch","message":"watch triggered","data":{"classesCount":4,"currentClassId":3},"timestamp":1767017483702,"sessionId":"debug-session","runId":"run3","hypothesisId":"F"}
+{"location":"useAppState.js:watch","message":"saving to storage","data":{"classesCount":4},"timestamp":1767017484492,"sessionId":"debug-session","runId":"run3","hypothesisId":"F"}
+{"location":"useAppState.js:watch","message":"watch triggered","data":{"classesCount":4,"currentClassId":3},"timestamp":1767017488047,"sessionId":"debug-session","runId":"run3","hypothesisId":"F"}
+{"location":"useAppState.js:watch","message":"watch triggered","data":{"classesCount":4,"currentClassId":3},"timestamp":1767017488676,"sessionId":"debug-session","runId":"run3","hypothesisId":"F"}
+{"location":"useAppState.js:watch","message":"saving to storage","data":{"classesCount":4},"timestamp":1767017489493,"sessionId":"debug-session","runId":"run3","hypothesisId":"F"}
+{"location":"useAppState.js:watch","message":"watch triggered","data":{"classesCount":4,"currentClassId":3},"timestamp":1767017492059,"sessionId":"debug-session","runId":"run3","hypothesisId":"F"}
+{"location":"useAppState.js:watch","message":"saving to storage","data":{"classesCount":4},"timestamp":1767017493493,"sessionId":"debug-session","runId":"run3","hypothesisId":"F"}
+{"location":"useAppState.js:watch","message":"watch triggered","data":{"classesCount":4,"currentClassId":3},"timestamp":1767017525546,"sessionId":"debug-session","runId":"run3","hypothesisId":"F"}
+{"location":"useAppState.js:watch","message":"saving to storage","data":{"classesCount":4},"timestamp":1767017526494,"sessionId":"debug-session","runId":"run3","hypothesisId":"F"}
+{"location":"useAppState.js:watch","message":"watch triggered","data":{"classesCount":4,"currentClassId":3},"timestamp":1767017526575,"sessionId":"debug-session","runId":"run3","hypothesisId":"F"}
+{"location":"useAppState.js:watch","message":"saving to storage","data":{"classesCount":4},"timestamp":1767017527501,"sessionId":"debug-session","runId":"run3","hypothesisId":"F"}
+{"location":"useAppState.js:watch","message":"watch triggered","data":{"classesCount":4,"currentClassId":3},"timestamp":1767017527600,"sessionId":"debug-session","runId":"run3","hypothesisId":"F"}
+{"location":"useAppState.js:watch","message":"saving to storage","data":{"classesCount":4},"timestamp":1767017528497,"sessionId":"debug-session","runId":"run3","hypothesisId":"F"}

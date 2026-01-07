@@ -17,19 +17,7 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           source: "."
           target: "/www/wwwroot/teacherlab.cn"
-          rm: true
+          rm: false
+          overwrite: true
           strip_components: 0
-          exclude: |
-            .git
-            .github
-            .cursor
-            习题转ppt
-            背诵管理
-            错题统计
-            teacherelab
-            *.md
-            !教师实验室介绍稿.md
-            *.cursorrule
-            *.conf
-            *.sh
 

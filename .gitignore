@@ -1,32 +1,25 @@
-# Git相关
+# Git 相关
 .git/
-
-# GitHub Actions配置需要保留，只忽略其他.github内容
-.github/*
-!.github/workflows/
-!.github/workflows/**
+.github/
 
 # 编辑器相关
 .cursor/
-.vscode/
-.idea/
+*.cursorrule
 
-# 其他工具文件夹（不应该部署到主页）
+# 文档和配置文件（不需要部署到服务器）
+*.md
+!教师实验室介绍稿.md
+*.conf
+*.sh
+
+# 其他工具文件夹（这些是独立的仓库）
 习题转ppt/
 背诵管理/
 错题统计/
 teacherelab/
 
-# 文档文件（不需要部署）
-*.md
-!教师实验室介绍稿.md
-
-# 配置文件（不需要部署）
-*.cursorrule
-*.conf
-*.sh
-
-# 临时文件
+# 系统文件
+.user.ini
 .DS_Store
 Thumbs.db
 

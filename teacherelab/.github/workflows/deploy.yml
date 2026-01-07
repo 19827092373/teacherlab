@@ -12,12 +12,18 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
       
-    - name: Deploy to server
-      uses: easingthemes/ssh-deploy@v4.1.5
-      with:
-        ssh-private-key: ${{ secrets.SERVER_SSH_KEY }}
-        remote-host: ${{ secrets.SERVER_IP }}
-        remote-user: root
-        target: "/www/wwwroot/teacherlab.cn"
-        args: "-avzr --delete"
-        source: "./"
+    - name: Deploy to Aliyun
+      uses: easingthemes/ssh-deploy@main
+      env:
+        # Secrets 引用
+        SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+        REMOTE_HOST: ${{ secrets.SERVER_IP }}
+        REMOTE_USER: root
+        
+        # 部署参数
+        ARGS: "-rlgoDzvc -i"
+        SOURCE: "./"
+        TARGET: "/www/wwwroot/teacherlab.cn"
+        
+        # 排除项
+        EXCLUDE: "/dist/, /.git/, /.github/, /node_modules/"

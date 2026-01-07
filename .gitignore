@@ -1,6 +1,5 @@
 # Git 相关
 .git/
-.github/
 
 # 编辑器相关
 .cursor/

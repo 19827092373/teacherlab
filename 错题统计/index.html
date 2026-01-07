@@ -1,0 +1,1740 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>课堂错题统计系统</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: #f5f7fa;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.25);
+            position: relative;
+        }
+        
+        /* 添加开发者署名 */
+        .developer-credit {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 4px 10px;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            padding: 10px;
+            gap: 15px;
+        }
+        
+        .student-selector {
+            width: 30%;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+        
+        .problem-matrix {
+            width: 50%;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeInUp 0.5s ease-out forwards;
+            animation-delay: 0.1s;
+        }
+        
+        .wrong-problems-panel {
+            width: 20%;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            overflow-y: auto;
+            animation: fadeInUp 0.5s ease-out forwards;
+            animation-delay: 0.2s;
+        }
+        
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid #4b6cb7;
+            color: #182848;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #4b6cb7 0%, #3a57a6 100%);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 0.5rem 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(75, 108, 183, 0.25);
+        }
+        
+        .btn:hover {
+            background: linear-gradient(135deg, #3a57a6 0%, #182848 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(75, 108, 183, 0.4);
+        }
+        
+        .btn-random {
+            background: linear-gradient(135deg, #ff9966 0%, #ff7733 100%);
+            box-shadow: 0 3px 10px rgba(255, 153, 102, 0.25);
+        }
+        
+        .btn-random:hover {
+            background: linear-gradient(135deg, #ff7733 0%, #ff5500 100%);
+            box-shadow: 0 5px 15px rgba(255, 153, 102, 0.4);
+        }
+        
+        /* 更改学生列表为网格布局 */
+        .student-list {
+            margin-top: 1rem;
+            max-height: 45%;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 0.8rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 10px;
+            background-color: #fafafa;
+        }
+        
+        .student-group {
+            display: none;
+        }
+        
+        .group-title {
+            display: none;
+        }
+        
+        .group-students {
+            display: contents;
+        }
+        
+        .student-item {
+            padding: 0.7rem;
+            background: #ffffff;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #eee;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease;
+        }
+        
+        .student-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .student-item[data-group="1"]::before,
+        .student-item[data-group="2"]::before {
+            display: none;
+        }
+        
+        .highlighted {
+            background: #fffad6;
+            font-weight: bold;
+            animation: pulse 1.5s infinite;
+            border: 2px solid #4b6cb7;
+            box-shadow: 0 3px 10px rgba(75, 108, 183, 0.3);
+        }
+        
+        .highlighted.group-1,
+        .highlighted.group-2 {
+            background: #fffad6;
+            border: 2px solid #4b6cb7;
+        }
+        
+        .problem-grid {
+            display: grid;
+            gap: 12px;
+            width: 100%;
+            margin-top: 1.2rem;
+            justify-content: center;
+        }
+        
+        .problem-number {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #a0c4ff;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            user-select: none;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+        }
+        
+        .problem-number:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+        }
+        
+        .problem-number:active {
+            transform: scale(0.95);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+        }
+        
+        @keyframes click-animation {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.9); }
+            100% { transform: scale(1.05); }
+        }
+        
+        .problem-clicked {
+            animation: click-animation 0.3s ease;
+        }
+        
+        .click-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #4b6cb7;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            font-size: 0.8rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .heat-0 {
+            border: 2px solid #a0c4ff;
+        }
+        
+        .heat-1 {
+            border: 2px solid #ffd280;
+            background-color: rgba(255, 210, 128, 0.2);
+        }
+        
+        .heat-2 {
+            border: 2px solid #ffb347;
+            background-color: rgba(255, 179, 71, 0.3);
+        }
+        
+        .heat-3 {
+            border: 2px solid #ff8c00;
+            background-color: rgba(255, 140, 0, 0.4);
+        }
+        
+        .heat-4-plus {
+            border: 2px solid #ff4500;
+            background-color: rgba(255, 69, 0, 0.5);
+            animation: pulse-red 1.5s infinite;
+        }
+        
+        .wrong-problem-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-left: 4px solid #4b6cb7;
+            background: #f9f9f9;
+            margin-bottom: 1rem;
+            border-radius: 0 10px 10px 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .wrong-problem-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .wrong-problem-hot {
+            border-left-color: #ff4500;
+            background: #fff8f5;
+        }
+        
+        .problem-count {
+            background: #4b6cb7;
+            color: white;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .count-hot {
+            background: #ff4500;
+            animation: pulse 1s infinite;
+        }
+        
+        .controls {
+            margin-top: auto;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+        
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1.2rem;
+        }
+        
+        label {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #4b6cb7;
+        }
+        
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 0.8rem;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        textarea:focus {
+            border-color: #4b6cb7;
+            box-shadow: 0 0 0 3px rgba(75, 108, 183, 0.2);
+            outline: none;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes pulse-red {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 69, 0, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(255, 69, 0, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 69, 0, 0);
+            }
+        }
+        
+        .footer {
+            padding: 0.8rem;
+            text-align: center;
+            background: #eee;
+            font-size: 0.8rem;
+            color: #777;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        #related-problems {
+            margin-top: 1rem;
+            padding: 0.5rem;
+            border: 1px dashed #4b6cb7;
+            border-radius: 4px;
+            background: #f0f5ff;
+            display: none;
+        }
+        
+        .related-title {
+            font-weight: bold;
+            color: #4b6cb7;
+            margin-bottom: 0.5rem;
+        }
+        
+        .related-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        
+        .related-item {
+            background: white;
+            border: 1px solid #4b6cb7;
+            border-radius: 4px;
+            padding: 0.3rem 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .stats-summary {
+            margin-top: 1.2rem;
+            padding: 1rem;
+            background: #f0f5ff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .export-btn {
+            margin-top: 1rem;
+            background: linear-gradient(135deg, #27ae60 0%, #219653 100%);
+            box-shadow: 0 3px 10px rgba(39, 174, 96, 0.25);
+        }
+        
+        .export-btn:hover {
+            background: linear-gradient(135deg, #219653 0%, #1e8449 100%);
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.4);
+        }
+        
+        /* 学生导入面板样式 */
+        .import-panel {
+            display: none;
+            background: #f9f9f9;
+            padding: 1.2rem;
+            border-radius: 10px;
+            margin-bottom: 1.2rem;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .import-panel.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .random-settings {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+            background: #f5f7fa;
+            padding: 10px 15px;
+            border-radius: 8px;
+        }
+        
+        .random-count {
+            width: 70px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        /* 添加导出图片相关样式 */
+        .canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            flex-direction: column;
+            padding: 2rem;
+            backdrop-filter: blur(3px);
+        }
+        
+        .canvas-container canvas {
+            max-width: 100%;
+            max-height: 80vh;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            background-color: white;
+            border-radius: 8px;
+        }
+        
+        .canvas-actions {
+            margin-top: 1.5rem;
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .canvas-actions button {
+            padding: 0.8rem 1.5rem;
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .canvas-actions button:hover {
+            background-color: #219653;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .close-btn {
+            background-color: #e74c3c !important;
+        }
+        
+        .close-btn:hover {
+            background-color: #c0392b !important;
+        }
+        
+        /* 添加页面过渡动画 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* 改进空状态提示 */
+        .empty-message {
+            padding: 1.5rem;
+            text-align: center;
+            color: #888;
+            background: #f9f9f9;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border: 1px dashed #ddd;
+        }
+        
+        /* 添加已点名学生显示区域 */
+        .called-students-container {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            margin: 1rem 0;
+            animation: fadeIn 0.3s ease-out;
+            border: 1px solid #e0e6f0;
+            position: relative;
+        }
+        
+        .called-students-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.7rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e8eaed;
+        }
+        
+        .called-students-title span {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #182848;
+        }
+        
+        .called-students-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 6px;
+            min-height: 60px; /* 确保即使没有学生时也有一定高度 */
+        }
+        
+        .called-student-item {
+            background: #fffad6;
+            border: 1px solid #4b6cb7;
+            border-radius: 6px;
+            padding: 6px 10px;
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            animation: fadeIn 0.3s ease;
+            font-size: 0.9rem;
+            margin-bottom: 2px;
+        }
+        
+        .called-student-time {
+            font-size: 0.75rem;
+            margin-left: 6px;
+            color: #777;
+            font-weight: normal;
+        }
+        
+        .empty-called-message {
+            text-align: center;
+            color: #999;
+            padding: 0.8rem;
+            font-style: italic;
+            font-size: 0.9rem;
+            width: 100%;
+        }
+        
+        .clear-called-btn {
+            background: #ff7733;
+            color: white;
+            border: none;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+        }
+        
+        .section-subtitle {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #4b6cb7;
+            margin: 1rem 0 0.5rem 0;
+            padding-left: 0.3rem;
+            border-left: 3px solid #4b6cb7;
+        }
+        
+        .btn-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .reset-list-btn {
+            background: #f0f0f0;
+            color: #555;
+            border: 1px solid #ddd;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-left: 0.5rem;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .reset-list-btn:hover {
+            background: #e5e5e5;
+            border-color: #ccc;
+            color: #333;
+        }
+        
+        /* 点名系统整体调整 */
+        .student-selector {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* 
+        .called {
+            background: #f0f5ff;
+            border: 2px solid #4b6cb7;
+            position: relative;
+        }
+        
+        .called::after {
+            content: '✓';
+            position: absolute;
+            top: -7px;
+            right: -7px;
+            background: #4b6cb7;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        */
+    </style>
+</head>
+<body>
+    <header>
+        <h1>课堂错题统计系统</h1>
+        <p>实时可视化学生做题情况，助力高效课堂教学</p>
+        <div class="developer-credit">开发者：感恩烧饼</div>
+    </header>
+    
+    <div class="container">
+        <!-- 左侧：学生抽签系统 -->
+        <div class="student-selector">
+            <div class="section-title">随机点名系统</div>
+            
+            <button class="btn" id="toggle-import-btn">导入学生名单</button>
+            
+            <div class="import-panel" id="import-panel">
+                <div class="input-group">
+                    <label for="student-names">添加学生名单（每行一个姓名）：</label>
+                    <textarea id="student-names" rows="6" placeholder="例如：
+张三
+李四
+王五"></textarea>
+                    <button class="btn" id="add-students-btn">添加学生</button>
+                </div>
+            </div>
+            
+            <div class="random-settings">
+                <label for="random-count">一次抽取：</label>
+                <input type="number" id="random-count" class="random-count" min="1" max="50" value="1">
+                <span>名学生</span>
+            </div>
+            
+            <div class="btn-container">
+                <button class="btn btn-random" id="random-student-btn">随机点名</button>
+            </div>
+            
+            <!-- 添加已点名学生显示区域 -->
+            <div class="called-students-container">
+                <div class="called-students-title">
+                    <span>已点名学生</span>
+                    <button id="clear-called-btn" class="clear-called-btn">清空</button>
+                </div>
+                <div id="called-students-list" class="called-students-list">
+                    <div class="empty-called-message">尚未点名任何学生</div>
+                </div>
+            </div>
+            
+            <div class="section-subtitle">全部学生</div>
+            <div class="student-list" id="student-list">
+                <!-- 学生列表将在这里动态生成 -->
+            </div>
+            
+            <div class="controls">
+                <button class="btn" id="clear-students-btn">清空学生列表</button>
+                <button class="btn" id="save-students-btn">保存学生名单</button>
+            </div>
+        </div>
+        
+        <!-- 中间：题号矩阵 -->
+        <div class="problem-matrix">
+            <div class="section-title">智能题号矩阵</div>
+            
+            <div class="input-group">
+                <label for="problem-count">题目数量：</label>
+                <input type="number" id="problem-count" min="1" max="100" value="20">
+                <button class="btn" id="generate-matrix-btn">生成题号矩阵</button>
+            </div>
+            
+            <div class="problem-grid" id="problem-grid">
+                <!-- 题号矩阵将在这里动态生成 -->
+            </div>
+            
+            <div id="related-problems">
+                <div class="related-title">关联错题：</div>
+                <div class="related-items" id="related-items">
+                    <!-- 关联错题将在这里显示 -->
+                </div>
+            </div>
+            
+            <div class="stats-summary" id="stats-summary">
+                <strong>班级统计：</strong> 共有 <span id="wrong-count">0</span> 题被标记为错题，
+                高频错题（≥4次）：<span id="hot-count">0</span> 题
+            </div>
+            
+            <div class="controls">
+                <button class="btn" id="reset-problems-btn">重置错题统计</button>
+                <button class="btn export-btn" id="export-data-btn">导出统计数据</button>
+            </div>
+        </div>
+        
+        <!-- 右侧：错题聚焦面板 -->
+        <div class="wrong-problems-panel">
+            <div class="section-title">错题聚焦面板</div>
+            <div id="wrong-problems-list">
+                <!-- 错题列表将在这里动态生成 -->
+                <div class="empty-message">尚未有错题数据，请让学生在题号矩阵中点击</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        课堂错题统计系统 v1.0 | 帮助教师实时掌握学生学习情况
+    </div>
+    
+    <script>
+        // 存储题目和学生数据
+        const data = {
+            students: [],
+            problems: {},
+            relatedProblems: {
+                // 存储关联错题映射
+                // 例如：'1': ['2', '5'] 表示第1题与第2、5题相关
+            },
+            calledStudents: []
+        };
+        
+        // DOM元素引用
+        const toggleImportBtn = document.getElementById('toggle-import-btn');
+        const importPanel = document.getElementById('import-panel');
+        const studentNamesInput = document.getElementById('student-names');
+        const addStudentsBtn = document.getElementById('add-students-btn');
+        const randomStudentBtn = document.getElementById('random-student-btn');
+        const randomCountInput = document.getElementById('random-count');
+        const studentList = document.getElementById('student-list');
+        const clearStudentsBtn = document.getElementById('clear-students-btn');
+        const saveStudentsBtn = document.getElementById('save-students-btn');
+        
+        const problemCountInput = document.getElementById('problem-count');
+        const generateMatrixBtn = document.getElementById('generate-matrix-btn');
+        const problemGrid = document.getElementById('problem-grid');
+        const resetProblemsBtn = document.getElementById('reset-problems-btn');
+        const exportDataBtn = document.getElementById('export-data-btn');
+        
+        const wrongProblemsList = document.getElementById('wrong-problems-list');
+        const relatedProblems = document.getElementById('related-problems');
+        const relatedItems = document.getElementById('related-items');
+        
+        const wrongCountEl = document.getElementById('wrong-count');
+        const hotCountEl = document.getElementById('hot-count');
+        
+        // 已点名学生区域
+        const calledStudentsList = document.getElementById('called-students-list');
+        const clearCalledBtn = document.getElementById('clear-called-btn');
+        
+        // 存储已点名学生
+        const calledStudents = [];
+        
+        // 创建音频元素
+        const clickSound = document.createElement('audio');
+        clickSound.src = 'data:audio/mp3;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4Ljc2LjEwMAAAAAAAAAAAAAAA//tQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAADwAD///////////////////////////////////////////8AAAAATGF2YzU4LjEzAAAAAAAAAAAAAAAAJAQiAAAAAAAAA8AwGYVv//////////////////////////////////////////////////////////////////8AAAoAZgAAnQAAABMAAQAAAQAAAAAAAAAAAAAAAAAAAAAAAP/7kGQAAAAAADQAAAAAACwAAAAAAAAA/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/+5BkOgADvgJFwQQAKJMChzhAiAUOCIkFDBAAgkIRIKGCAAAABg2BgwQZMnlR4mMyRjNFYzRnADOqfZ4rM3ZplQ3F2V/WeDx4wA8AOHnABhA4AFADQBC8CAIQHkjAwPPNIHnA/4HCPkHCABQ48eOCCx44f/Lhw8eP//+PDhwIAAAQ1VrkEYAAABp///+YJmPXF///////5U0TTCNQOAQAAAAAKBwc////////////+oKgqCoLgAAAQAAAAA=';
+        clickSound.volume = 0.3;
+        document.body.appendChild(clickSound);
+        
+        // 初始化页面
+        document.addEventListener('DOMContentLoaded', () => {
+            loadData();
+            addEventListeners();
+            updateStudentList();
+            generateProblemMatrix();
+            updateWrongProblemsList();
+            updateStatsSummary();
+            updateCalledStudentsList(); // 初始化已点名学生列表
+            
+            // 设置定时自动保存（每30秒）
+            setInterval(() => {
+                saveData(false);
+            }, 30000);
+            
+            // 添加窗口大小变化事件，调整题号大小
+            window.addEventListener('resize', debounce(() => {
+                if (document.getElementById('problem-grid').children.length > 0) {
+                    generateProblemMatrix();
+                }
+            }, 250));
+        });
+        
+        // 添加事件监听器
+        function addEventListeners() {
+            // 学生名单面板
+            toggleImportBtn.addEventListener('click', () => {
+                importPanel.classList.toggle('active');
+            });
+            
+            // 学生相关
+            addStudentsBtn.addEventListener('click', addStudents);
+            randomStudentBtn.addEventListener('click', selectRandomStudents);
+            clearStudentsBtn.addEventListener('click', clearStudents);
+            saveStudentsBtn.addEventListener('click', () => saveData(true));
+            
+            // 已点名学生相关
+            clearCalledBtn.addEventListener('click', clearCalledStudents);
+            
+            // 题目相关
+            generateMatrixBtn.addEventListener('click', generateProblemMatrix);
+            resetProblemsBtn.addEventListener('click', resetProblems);
+            exportDataBtn.addEventListener('click', exportData);
+            
+            // 其他事件在生成元素时添加
+        }
+        
+        // 从本地存储加载数据
+        function loadData() {
+            const savedData = localStorage.getItem('classroomWrongProblemsData');
+            if (savedData) {
+                const parsedData = JSON.parse(savedData);
+                data.students = parsedData.students || [];
+                data.problems = parsedData.problems || {};
+                data.relatedProblems = parsedData.relatedProblems || {};
+                data.calledStudents = parsedData.calledStudents || [];
+                
+                // 加载已点名学生
+                if (parsedData.calledStudents) {
+                    calledStudents.push(...parsedData.calledStudents);
+                }
+            }
+        }
+        
+        // 保存数据到本地存储
+        // showAlert: 是否显示保存成功提示，用于区分手动保存和自动保存
+        function saveData(showAlert = false) {
+            // 添加已点名学生到存储数据
+            const saveObject = {
+                students: data.students,
+                problems: data.problems,
+                relatedProblems: data.relatedProblems,
+                calledStudents: calledStudents
+            };
+            
+            localStorage.setItem('classroomWrongProblemsData', JSON.stringify(saveObject));
+            if (showAlert) {
+                alert('数据已保存到本地！');
+            }
+        }
+        
+        // 添加学生
+        function addStudents() {
+            const names = studentNamesInput.value.trim().split('\n').filter(name => name.trim());
+            
+            if (names.length === 0) {
+                alert('请输入至少一个学生姓名！');
+                return;
+            }
+            
+            // 添加新学生，避免重复
+            names.forEach(name => {
+                const trimmedName = name.trim();
+                if (trimmedName && !data.students.includes(trimmedName)) {
+                    data.students.push(trimmedName);
+                }
+            });
+            
+            updateStudentList();
+            studentNamesInput.value = '';
+            saveData(false);
+            
+            // 关闭导入面板
+            importPanel.classList.remove('active');
+        }
+        
+        // 更新学生列表显示
+        function updateStudentList() {
+            studentList.innerHTML = '';
+            
+            if (data.students.length === 0) {
+                studentList.innerHTML = '<div class="empty-message">没有学生数据</div>';
+                return;
+            }
+            
+            // 直接按照原始索引顺序显示学生
+            data.students.forEach((student, index) => {
+                const studentEl = document.createElement('div');
+                studentEl.className = 'student-item';
+                studentEl.textContent = student;
+                studentEl.setAttribute('data-index', index);
+                
+                // 设置组别属性（用于抽取算法）
+                if (index < 15) {
+                    studentEl.setAttribute('data-group', '1');
+                } else if (index < 40) {
+                    studentEl.setAttribute('data-group', '2');
+                } else {
+                    studentEl.setAttribute('data-group', '3');
+                }
+                
+                studentList.appendChild(studentEl);
+            });
+        }
+        
+        // 随机选择多名学生 - 按组比例抽取
+        function selectRandomStudents() {
+            if (data.students.length === 0) {
+                alert('没有学生数据，请先添加学生！');
+                return;
+            }
+            
+            // 获取要抽取的学生总数量
+            let totalCount = parseInt(randomCountInput.value) || 1;
+            
+            // 确保数量不超过学生总数
+            totalCount = Math.min(totalCount, data.students.length);
+            
+            // 移除之前的高亮
+            const highlighted = document.querySelectorAll('.student-item.highlighted');
+            highlighted.forEach(el => el.classList.remove('highlighted'));
+            
+            // 将学生分组
+            const group1 = data.students.slice(0, 15);
+            const group2 = data.students.slice(15, 40);
+            
+            // 计算各组抽取数量（根据比例）
+            // 20% 从第一组, 80% 从第二组
+            let group1Count = Math.round(totalCount * 0.2);
+            let group2Count = totalCount - group1Count;
+            
+            // 确保数量不超过各组实际学生数
+            group1Count = Math.min(group1Count, group1.length);
+            group2Count = Math.min(group2Count, group2.length);
+            
+            // 如果第二组学生不足，剩余的从第一组抽取
+            if (group2Count < (totalCount - group1Count)) {
+                group1Count = Math.min(group1.length, totalCount - group2Count);
+            }
+            
+            // 随机选择学生
+            const selectedIndices = [];
+            
+            // 从第一组抽取
+            if (group1.length > 0 && group1Count > 0) {
+                const group1Indices = Array.from({ length: group1.length }, (_, i) => i);
+                shuffleArray(group1Indices);
+                selectedIndices.push(...group1Indices.slice(0, group1Count));
+            }
+            
+            // 从第二组抽取
+            if (group2.length > 0 && group2Count > 0) {
+                const group2Indices = Array.from({ length: group2.length }, (_, i) => i + 15);
+                shuffleArray(group2Indices);
+                selectedIndices.push(...group2Indices.slice(0, group2Count));
+            }
+            
+            // 添加新的被点名学生到记录中
+            selectedIndices.forEach(index => {
+                // 如果这个学生之前已经点过名，先从列表中移除它
+                const existingIndex = data.calledStudents.indexOf(index);
+                if (existingIndex !== -1) {
+                    data.calledStudents.splice(existingIndex, 1);
+                }
+                
+                // 将新选中的学生添加到列表最前面
+                data.calledStudents.unshift(index);
+                
+                // 同时添加到已点名学生显示区域
+                const studentName = data.students[index];
+                addToCalledStudents({
+                    name: studentName,
+                    time: new Date()
+                });
+            });
+            
+            // 更新学生列表显示
+            updateStudentList();
+            
+            // 高亮显示当前选中的学生
+            const studentItems = document.querySelectorAll('.student-item');
+            studentItems.forEach(item => {
+                const index = parseInt(item.getAttribute('data-index'));
+                if (selectedIndices.includes(index)) {
+                    item.classList.add('highlighted');
+                    
+                    // 将高亮的学生滚动到可见区域（选择第一个学生）
+                    if (index === selectedIndices[0]) {
+                        item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }
+            });
+            
+            // 保存数据
+            saveData(false);
+        }
+        
+        // 添加学生到已点名列表
+        function addToCalledStudents(student) {
+            // 添加到已点名数组
+            calledStudents.push(student);
+            
+            // 更新显示
+            updateCalledStudentsList();
+            
+            // 保存数据
+            saveData(false);
+        }
+        
+        // 洗牌数组的辅助函数
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+        
+        // 更新已点名学生列表显示
+        function updateCalledStudentsList() {
+            calledStudentsList.innerHTML = '';
+            
+            if (calledStudents.length === 0) {
+                calledStudentsList.innerHTML = '<div class="empty-called-message">尚未点名任何学生</div>';
+                return;
+            }
+            
+            // 按时间倒序显示
+            const sortedStudents = [...calledStudents].sort((a, b) => new Date(b.time) - new Date(a.time));
+            
+            // 显示已点名学生
+            sortedStudents.forEach(student => {
+                const studentEl = document.createElement('div');
+                studentEl.className = 'called-student-item';
+                
+                // 创建学生名称
+                const nameEl = document.createElement('span');
+                nameEl.textContent = student.name;
+                studentEl.appendChild(nameEl);
+                
+                // 创建时间显示
+                const timeEl = document.createElement('span');
+                timeEl.className = 'called-student-time';
+                
+                const studentTime = new Date(student.time);
+                const timeStr = `${studentTime.getHours().toString().padStart(2, '0')}:${studentTime.getMinutes().toString().padStart(2, '0')}`;
+                
+                timeEl.textContent = timeStr;
+                studentEl.appendChild(timeEl);
+                
+                calledStudentsList.appendChild(studentEl);
+            });
+        }
+        
+        // 清空已点名学生列表
+        function clearCalledStudents() {
+            if (confirm('确定要清空已点名学生列表吗？')) {
+                // 清空已点名学生数组
+                calledStudents.length = 0;
+                
+                // 清空data中的点名记录
+                data.calledStudents = [];
+                
+                // 移除所有学生的高亮标记
+                const highlightedStudents = document.querySelectorAll('.student-item.highlighted');
+                highlightedStudents.forEach(el => {
+                    el.classList.remove('highlighted');
+                });
+                
+                // 更新已点名学生显示区域
+                updateCalledStudentsList();
+                
+                // 保存数据
+                saveData(false);
+            }
+        }
+        
+        // 清空学生列表
+        function clearStudents() {
+            if (confirm('确定要清空学生列表吗？')) {
+                data.students = [];
+                updateStudentList();
+                saveData(false);
+            }
+        }
+        
+        // 生成题号矩阵
+        function generateProblemMatrix() {
+            const count = parseInt(problemCountInput.value) || 20;
+            
+            // 限制题目数量
+            if (count < 1 || count > 100) {
+                alert('题目数量应该在1到100之间！');
+                return;
+            }
+            
+            problemGrid.innerHTML = '';
+            
+            // 保留已有的题目数据
+            const existingProblems = Object.keys(data.problems).map(Number);
+            
+            // 计算最佳的网格布局
+            const containerWidth = problemGrid.clientWidth;
+            const containerHeight = document.querySelector('.problem-matrix').clientHeight * 0.6; // 使用容器高度的60%
+            
+            // 计算最佳列数 - 根据题目数量动态调整
+            let columns;
+            if (count <= 10) {
+                columns = Math.min(5, count); // 少于10个题目时，最多5列
+            } else if (count <= 25) {
+                columns = Math.min(Math.ceil(Math.sqrt(count)), 6); // 10-25个题目，最多6列
+            } else if (count <= 50) {
+                columns = Math.min(Math.ceil(Math.sqrt(count)), 8); // 25-50个题目，最多8列
+            } else {
+                columns = Math.min(Math.ceil(Math.sqrt(count)), 10); // 50-100个题目，最多10列
+            }
+            
+            // 计算行数
+            const rows = Math.ceil(count / columns);
+            
+            // 计算每个按钮的尺寸
+            const gap = 10; // 间隔
+            const buttonWidth = Math.floor((containerWidth - (columns - 1) * gap) / columns);
+            const buttonHeight = Math.min(buttonWidth, Math.floor((containerHeight - (rows - 1) * gap) / rows));
+            
+            // 优化字体大小计算逻辑，显著增大字体大小
+            let fontSize;
+            if (count <= 10) {
+                // 少于10个题目，使用非常大的字体
+                fontSize = Math.max(20, Math.min(36, Math.floor(buttonHeight * 0.65)));
+            } else if (count <= 25) {
+                // 10-25题，使用大号字体
+                fontSize = Math.max(18, Math.min(32, Math.floor(buttonHeight * 0.6)));
+            } else if (count <= 50) {
+                // 25-50题，使用中等字体
+                fontSize = Math.max(16, Math.min(28, Math.floor(buttonHeight * 0.55)));
+            } else {
+                // 50-100题，使用较小字体，但仍然比原来大
+                fontSize = Math.max(14, Math.min(24, Math.floor(buttonHeight * 0.5)));
+            }
+            
+            // 设置网格样式
+            problemGrid.style.gridTemplateColumns = `repeat(${columns}, ${buttonWidth}px)`;
+            
+            // 创建题号按钮
+            for (let i = 1; i <= count; i++) {
+                const problemEl = document.createElement('div');
+                problemEl.className = 'problem-number';
+                problemEl.setAttribute('data-problem', i);
+                problemEl.textContent = i;
+                
+                // 设置按钮尺寸和字体大小
+                problemEl.style.width = `${buttonWidth}px`;
+                problemEl.style.height = `${buttonHeight}px`;
+                problemEl.style.fontSize = `${fontSize}px`;
+                
+                // 加粗字体并设置阴影，增强可读性
+                problemEl.style.fontWeight = '700';
+                problemEl.style.textShadow = '0 1px 1px rgba(0,0,0,0.15)';
+                
+                // 如果题目已存在数据，应用相应样式
+                if (existingProblems.includes(i)) {
+                    const clickCount = data.problems[i] || 0;
+                    updateProblemHeatStyle(problemEl, clickCount);
+                    
+                    if (clickCount > 0) {
+                        const countBadge = document.createElement('div');
+                        countBadge.className = 'click-count';
+                        countBadge.textContent = clickCount;
+                        problemEl.appendChild(countBadge);
+                    }
+                }
+                
+                // 添加点击事件
+                problemEl.addEventListener('click', handleProblemClick);
+                
+                // 添加长按事件（显示错误人次）
+                let pressTimer;
+                problemEl.addEventListener('mousedown', function() {
+                    pressTimer = setTimeout(() => {
+                        // 只显示关联题目，不弹出提示
+                        showRelatedProblems(i);
+                    }, 800);
+                });
+                
+                problemEl.addEventListener('mouseup', function() {
+                    clearTimeout(pressTimer);
+                });
+                
+                problemEl.addEventListener('mouseleave', function() {
+                    clearTimeout(pressTimer);
+                });
+                
+                problemGrid.appendChild(problemEl);
+            }
+            
+            updateWrongProblemsList();
+            updateStatsSummary();
+        }
+        
+        // 处理题目点击
+        function handleProblemClick(e) {
+            const problemEl = e.currentTarget;
+            const problemNumber = parseInt(problemEl.getAttribute('data-problem'));
+            
+            // 播放点击音效
+            if (clickSound) {
+                // 重置音频播放位置，以便可以连续点击
+                clickSound.currentTime = 0;
+                clickSound.play().catch(err => console.log('音频播放失败:', err));
+            }
+            
+            // 添加点击动画效果
+            problemEl.classList.add('problem-clicked');
+            setTimeout(() => {
+                problemEl.classList.remove('problem-clicked');
+            }, 300);
+            
+            // 初始化或增加点击计数
+            if (!data.problems[problemNumber]) {
+                data.problems[problemNumber] = 1;
+            } else {
+                data.problems[problemNumber]++;
+            }
+            
+            const clickCount = data.problems[problemNumber];
+            
+            // 更新题目样式
+            updateProblemHeatStyle(problemEl, clickCount);
+            
+            // 更新或添加计数标记
+            let countBadge = problemEl.querySelector('.click-count');
+            if (!countBadge) {
+                countBadge = document.createElement('div');
+                countBadge.className = 'click-count';
+                problemEl.appendChild(countBadge);
+            }
+            countBadge.textContent = clickCount;
+            
+            // 检查相似题目逻辑（例如：相邻题目可能相关）
+            findRelatedProblems(problemNumber);
+            
+            // 更新错题列表
+            updateWrongProblemsList();
+            
+            // 不再根据热度重新排序，保持题号固定位置
+            // sortProblemsByHeat();
+            
+            // 更新统计信息
+            updateStatsSummary();
+            
+            // 保存数据 - 静默保存，不弹窗
+            saveData(false);
+        }
+        
+        // 根据点击次数更新题目热度样式
+        function updateProblemHeatStyle(element, count) {
+            // 移除所有热度类
+            element.classList.remove('heat-0', 'heat-1', 'heat-2', 'heat-3', 'heat-4-plus');
+            
+            // 添加对应热度类
+            if (count === 0) {
+                element.classList.add('heat-0');
+            } else if (count === 1) {
+                element.classList.add('heat-1');
+            } else if (count === 2) {
+                element.classList.add('heat-2');
+            } else if (count === 3) {
+                element.classList.add('heat-3');
+            } else if (count >= 4) {
+                element.classList.add('heat-4-plus');
+            }
+        }
+        
+        // 查找相关题目
+        function findRelatedProblems(problemNumber) {
+            // 这里实现相关题目的查找逻辑
+            // 简单示例：假设相邻的题目可能相关
+            const related = [];
+            const pNum = parseInt(problemNumber);
+            
+            // 检查前后相邻的几道题
+            for (let i = Math.max(1, pNum - 2); i <= pNum + 2; i++) {
+                if (i !== pNum && data.problems[i] && data.problems[i] > 0) {
+                    related.push(i);
+                }
+            }
+            
+            // 存储关联关系
+            if (related.length > 0) {
+                data.relatedProblems[problemNumber] = related;
+            }
+        }
+        
+        // 显示关联题目（长按触发）
+        function showRelatedProblems(problemNumber) {
+            const clickCount = data.problems[problemNumber] || 0;
+            
+            // 显示关联题目
+            if (data.relatedProblems[problemNumber] && data.relatedProblems[problemNumber].length > 0) {
+                relatedProblems.style.display = 'block';
+                relatedItems.innerHTML = '';
+                
+                // 添加当前题目信息
+                const currentItem = document.createElement('div');
+                currentItem.className = 'related-item';
+                currentItem.style.fontWeight = 'bold';
+                currentItem.textContent = `题 #${problemNumber} (${clickCount}次)`;
+                relatedItems.appendChild(currentItem);
+                
+                // 添加关联题目信息
+                data.relatedProblems[problemNumber].forEach(relatedNum => {
+                    const relatedItem = document.createElement('div');
+                    relatedItem.className = 'related-item';
+                    relatedItem.textContent = `题 #${relatedNum} (${data.problems[relatedNum] || 0}次)`;
+                    relatedItems.appendChild(relatedItem);
+                });
+            } else {
+                relatedProblems.style.display = 'none';
+            }
+        }
+        
+        // 更新错题列表
+        function updateWrongProblemsList() {
+            wrongProblemsList.innerHTML = '';
+            
+            const wrongProblems = Object.entries(data.problems)
+                .filter(([_, count]) => count > 0)
+                .sort((a, b) => b[1] - a[1]);
+            
+            if (wrongProblems.length === 0) {
+                wrongProblemsList.innerHTML = '<div class="empty-message">尚未有错题数据，请让学生在题号矩阵中点击</div>';
+                return;
+            }
+            
+            wrongProblems.forEach(([problem, count]) => {
+                const itemEl = document.createElement('div');
+                itemEl.className = 'wrong-problem-item';
+                itemEl.classList.toggle('wrong-problem-hot', count >= 4);
+                
+                const numEl = document.createElement('div');
+                numEl.textContent = `题 #${problem}`;
+                
+                const countEl = document.createElement('div');
+                countEl.className = 'problem-count';
+                countEl.classList.toggle('count-hot', count >= 4);
+                countEl.textContent = count;
+                
+                itemEl.appendChild(numEl);
+                itemEl.appendChild(countEl);
+                wrongProblemsList.appendChild(itemEl);
+            });
+        }
+        
+        // 根据热度排序题目（已修改为保持固定顺序）
+        function sortProblemsByHeat() {
+            // 保留此函数但不执行任何排序操作
+            // 这确保了其他可能调用此函数的地方不会出错
+            console.log("题号排序已禁用，保持原始顺序");
+        }
+        
+        // 更新统计摘要
+        function updateStatsSummary() {
+            const wrongProblems = Object.values(data.problems).filter(count => count > 0).length;
+            const hotProblems = Object.values(data.problems).filter(count => count >= 4).length;
+            
+            wrongCountEl.textContent = wrongProblems;
+            hotCountEl.textContent = hotProblems;
+        }
+        
+        // 重置错题统计
+        function resetProblems() {
+            if (confirm('确定要重置所有错题统计数据吗？')) {
+                data.problems = {};
+                data.relatedProblems = {};
+                generateProblemMatrix();
+                updateWrongProblemsList();
+                updateStatsSummary();
+                saveData(false);
+            }
+        }
+        
+        // 导出数据为图片
+        function exportData() {
+            const wrongProblems = Object.entries(data.problems)
+                .filter(([_, count]) => count > 0)
+                .sort((a, b) => b[1] - a[1]);
+            
+            const hotProblems = wrongProblems.filter(([_, count]) => count >= 4);
+            
+            // 创建画布容器
+            const container = document.createElement('div');
+            container.className = 'canvas-container';
+            document.body.appendChild(container);
+            
+            // 创建画布 - 调整大小以适应更多内容
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // 基础尺寸
+            const width = 800;
+            let height = 600;
+            
+            // 计算错题热度排行所需高度
+            const barHeight = 22;
+            const barGap = 8;
+            const heatmapTop = 200;
+            const heatmapRowHeight = barHeight + barGap;
+            
+            // 计算错题热度排行的总高度
+            const totalBars = Math.min(30, wrongProblems.length); // 最多展示30个题目
+            const maxBarsPerColumn = 15; // 每列最多显示的错题数
+            const leftColumnCount = Math.min(maxBarsPerColumn, totalBars);
+            
+            // 计算高频错题区域所需高度
+            const gridSize = 45;
+            const gridGap = 10;
+            const gridsPerRow = 10; // 每行最多10个
+            const hotRows = Math.ceil(hotProblems.length / gridsPerRow);
+            const hotProblemsSectionHeight = (hotRows * (gridSize + gridGap)) + 60; // 加60留出标题和边距
+            
+            // 根据热度图高度计算高频错题起始位置
+            let highFreqTop = heatmapTop + (leftColumnCount * heatmapRowHeight) + 60; // 至少60px的间距
+            
+            // 计算总画布所需高度
+            let totalHeight = highFreqTop + hotProblemsSectionHeight + 60; // 为底部添加60px边距
+            
+            // 设置最终画布高度 (确保至少600px)
+            height = Math.max(600, totalHeight);
+            
+            // 如果高度超过2000px，可能会有性能问题，调整为多页
+            if (height > 2000) {
+                // 限制最大高度为2000px，内容过多时会省略部分
+                height = 2000;
+                console.log('Warning: Canvas height exceeds 2000px, some content may be truncated');
+            }
+            
+            canvas.width = width;
+            canvas.height = height;
+            
+            // 绘制背景
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, width, height);
+            
+            // 绘制标题
+            ctx.fillStyle = '#182848';
+            ctx.font = 'bold 24px Microsoft YaHei';
+            ctx.textAlign = 'center';
+            ctx.fillText('课堂错题统计报告', width / 2, 40);
+            
+            // 绘制日期
+            ctx.font = '14px Microsoft YaHei';
+            ctx.fillStyle = '#555';
+            ctx.fillText(new Date().toLocaleString(), width / 2, 65);
+            
+            // 绘制统计摘要
+            ctx.textAlign = 'left';
+            ctx.font = 'bold 18px Microsoft YaHei';
+            ctx.fillStyle = '#4b6cb7';
+            ctx.fillText(`班级统计摘要:`, 50, 100);
+            
+            ctx.font = '16px Microsoft YaHei';
+            ctx.fillStyle = '#333';
+            ctx.fillText(`· 总共标记错题: ${wrongProblems.length} 题`, 50, 130);
+            ctx.fillText(`· 高频错题(≥4次): ${hotProblems.length} 题`, 50, 155);
+            
+            // 绘制错题热度排行 - 双栏设计
+            if (wrongProblems.length > 0) {
+                const maxCount = Math.max(...wrongProblems.map(([_, count]) => count));
+                const top = heatmapTop;
+                
+                ctx.font = 'bold 18px Microsoft YaHei';
+                ctx.fillStyle = '#4b6cb7';
+                ctx.fillText('错题热度排行:', 50, top - 20);
+                
+                // 错题排行采用双栏布局
+                const columnWidth = 350; // 每列宽度
+                const columnGap = 50; // 列间距
+                
+                // 计算每列要展示的数量
+                const rightColumnCount = totalBars > maxBarsPerColumn ? totalBars - maxBarsPerColumn : 0;
+                
+                // 左列错题
+                const leftProblems = wrongProblems.slice(0, leftColumnCount);
+                leftProblems.forEach(([problem, count], index) => {
+                    const y = top + index * heatmapRowHeight;
+                    const barWidth = (count / maxCount) * 150; // 左列条形图宽度较小
+                    
+                    // 根据热度选择颜色
+                    let color;
+                    if (count >= 4) {
+                        color = '#ff4500';
+                    } else if (count === 3) {
+                        color = '#ff8c00';
+                    } else if (count === 2) {
+                        color = '#ffb347';
+                    } else {
+                        color = '#ffd280';
+                    }
+                    
+                    // 绘制问题编号
+                    ctx.font = '14px Microsoft YaHei';
+                    ctx.fillStyle = '#333';
+                    ctx.textAlign = 'right';
+                    ctx.fillText(`题 #${problem}:`, 80, y + barHeight/2 + 4);
+                    
+                    // 绘制热度条
+                    ctx.fillStyle = color;
+                    ctx.fillRect(90, y, barWidth, barHeight);
+                    
+                    // 绘制计数
+                    ctx.fillStyle = '#333';
+                    ctx.textAlign = 'left';
+                    ctx.fillText(`${count}次`, 100 + barWidth, y + barHeight/2 + 4);
+                });
+                
+                // 右列错题
+                if (rightColumnCount > 0) {
+                    const rightProblems = wrongProblems.slice(maxBarsPerColumn, totalBars);
+                    rightProblems.forEach(([problem, count], index) => {
+                        const y = top + index * heatmapRowHeight;
+                        const barWidth = (count / maxCount) * 150; // 右列条形图宽度较小
+                        const xOffset = columnWidth + columnGap;
+                        
+                        // 根据热度选择颜色
+                        let color;
+                        if (count >= 4) {
+                            color = '#ff4500';
+                        } else if (count === 3) {
+                            color = '#ff8c00';
+                        } else if (count === 2) {
+                            color = '#ffb347';
+                        } else {
+                            color = '#ffd280';
+                        }
+                        
+                        // 绘制问题编号
+                        ctx.font = '14px Microsoft YaHei';
+                        ctx.fillStyle = '#333';
+                        ctx.textAlign = 'right';
+                        ctx.fillText(`题 #${problem}:`, xOffset + 80 - 40, y + barHeight/2 + 4);
+                        
+                        // 绘制热度条
+                        ctx.fillStyle = color;
+                        ctx.fillRect(xOffset + 90 - 40, y, barWidth, barHeight);
+                        
+                        // 绘制计数
+                        ctx.fillStyle = '#333';
+                        ctx.textAlign = 'left';
+                        ctx.fillText(`${count}次`, xOffset + 100 - 40 + barWidth, y + barHeight/2 + 4);
+                    });
+                }
+                
+                // 如果错题超过显示上限，添加说明
+                if (wrongProblems.length > totalBars) {
+                    const y = top + maxBarsPerColumn * heatmapRowHeight + 10;
+                    ctx.fillStyle = '#777';
+                    ctx.textAlign = 'left';
+                    ctx.fillText(`* 仅显示前 ${totalBars} 道高频错题`, 50, y);
+                }
+            } else {
+                ctx.font = '16px Microsoft YaHei';
+                ctx.fillStyle = '#777';
+                ctx.fillText('暂无错题数据', 50, 200);
+            }
+            
+            // 绘制高频错题区域标题分隔线
+            if (hotProblems.length > 0) {
+                ctx.beginPath();
+                ctx.moveTo(50, highFreqTop - 30);
+                ctx.lineTo(width - 50, highFreqTop - 30);
+                ctx.strokeStyle = '#eee';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            }
+            
+            // 绘制高频错题区域
+            if (hotProblems.length > 0) {
+                ctx.font = 'bold 18px Microsoft YaHei';
+                ctx.fillStyle = '#ff4500';
+                ctx.textAlign = 'left';
+                ctx.fillText('高频错题(≥4次):', 50, highFreqTop);
+                
+                // 创建热点错题格子
+                const rows = Math.ceil(hotProblems.length / gridsPerRow);
+                
+                hotProblems.forEach(([problem, count], index) => {
+                    const row = Math.floor(index / gridsPerRow);
+                    const col = index % gridsPerRow;
+                    
+                    const x = 50 + col * (gridSize + gridGap);
+                    const y = highFreqTop + 20 + row * (gridSize + gridGap);
+                    
+                    // 绘制边框和背景
+                    ctx.fillStyle = 'rgba(255, 69, 0, 0.2)';
+                    ctx.fillRect(x, y, gridSize, gridSize);
+                    ctx.strokeStyle = '#ff4500';
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(x, y, gridSize, gridSize);
+                    
+                    // 绘制题号
+                    ctx.font = 'bold 16px Microsoft YaHei';
+                    ctx.fillStyle = '#333';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(`#${problem}`, x + gridSize/2, y + gridSize/2);
+                    
+                    // 绘制计数
+                    ctx.font = '12px Microsoft YaHei';
+                    ctx.fillText(`${count}次`, x + gridSize/2, y + gridSize/2 + 18);
+                });
+            }
+            
+            // 绘制页脚
+            ctx.font = '12px Microsoft YaHei';
+            ctx.fillStyle = '#777';
+            ctx.textAlign = 'center';
+            ctx.fillText('课堂错题统计系统 v1.0 | ' + new Date().toISOString().slice(0, 10), width / 2, height - 20);
+            
+            // 将画布添加到容器
+            container.appendChild(canvas);
+            
+            // 添加操作按钮
+            const actions = document.createElement('div');
+            actions.className = 'canvas-actions';
+            
+            // 下载按钮
+            const downloadBtn = document.createElement('button');
+            downloadBtn.textContent = '下载图片';
+            downloadBtn.addEventListener('click', () => {
+                // 创建下载链接
+                const dataURL = canvas.toDataURL('image/png');
+                const a = document.createElement('a');
+                a.href = dataURL;
+                a.download = '错题统计_' + new Date().toISOString().slice(0, 10) + '.png';
+                a.click();
+            });
+            actions.appendChild(downloadBtn);
+            
+            // 关闭按钮
+            const closeBtn = document.createElement('button');
+            closeBtn.textContent = '关闭';
+            closeBtn.className = 'close-btn';
+            closeBtn.addEventListener('click', () => {
+                document.body.removeChild(container);
+            });
+            actions.appendChild(closeBtn);
+            
+            container.appendChild(actions);
+        }
+        
+        // 防抖函数，避免频繁触发resize事件导致的性能问题
+        function debounce(func, wait) {
+            let timeout;
+            return function() {
+                const context = this;
+                const args = arguments;
+                clearTimeout(timeout);
+                timeout = setTimeout(() => {
+                    func.apply(context, args);
+                }, wait);
+            };
+        }
+    </script>
+</body>
+</html> 

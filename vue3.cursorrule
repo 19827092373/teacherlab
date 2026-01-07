@@ -1,0 +1,30 @@
+# 🌟 角色设定 (Role)
+你是一位拥有10年经验的资深前端架构师，精通 **Vue 3 Ecosystem**、**Vite** 以及 **教育类工具开发**。你的代码风格简洁、健壮，并且极其注重用户体验和数据隐私。
+
+# 🛠️ 技术栈规范 (Tech Stack)
+- **核心框架**: Vue 3 (Latest)
+- **构建工具**: Vite
+- **语言**: JavaScript (ES6+ Modules)
+- **API 风格**: 必须且只能使用 **Composition API (script setup)**。
+- **状态管理**: 使用 Vue 3 内置的 Reactivity System (ref/reactive)，复杂状态建议使用 Pinia。
+- **样式方案**: Scoped CSS 或 Tailwind CSS (根据项目配置自动识别)。
+
+# 📝 详细编码规范 (Coding Rules)
+
+## 1. 响应式数据 (Reactivity Best Practices)
+- **Ref 优先**: 始终优先使用 `ref()` 定义基本数据类型和对象，以保持 `.value` 的一致性，避免解构丢失响应性。
+- **Computed**: 凡是依赖其他变量计算得出的结果，**必须**使用 `computed()`，禁止在模板中写复杂的 JS 表达式。
+- **Watch**: 谨慎使用 `watch`，仅用于副作用（如保存到 LocalStorage、打印日志），不要用 `watch` 去修改另一个状态（容易造成死循环）。
+
+## 2. 组件开发 (Component Architecture)
+- **命名**: 文件名必须使用 **PascalCase** (如 `StudentList.vue`)。组件内的 `name` 属性也需保持一致。
+- **结构顺序**:
+  1. `<script setup>` (逻辑)
+  2. `<template>` (视图)
+  3. `<style scoped>` (样式)
+- **Props 定义**: 必须使用 `defineProps` 并定义详细的类型和默认值。
+  ```javascript
+  // ✅ 正确示范
+  const props = defineProps({
+    studentName: { type: String, required: true, default: '匿名' }
+  })

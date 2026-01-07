@@ -14,10 +14,10 @@ jobs:
       
     - name: Deploy to server
       uses: easingthemes/ssh-deploy@v4.1.5
-      with:
-        ssh-private-key: ${{ secrets.SERVER_SSH_KEY }}
-        remote-host: ${{ secrets.SERVER_IP }}
-        remote-user: root
-        args: "-avz --delete"
-        source: "./"
-        target: "/www/wwwroot/teacherlab.cn"
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+        REMOTE_HOST: ${{ secrets.SERVER_IP }}
+        REMOTE_USER: root
+        TARGET: "/www/wwwroot/teacherlab.cn"
+        ARGS: "-avzr --delete"
+        SOURCE: "./"

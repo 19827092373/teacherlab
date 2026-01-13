@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00ff41;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00ffff;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- 背景圆形 -->
+  <circle cx="64" cy="64" r="60" fill="#050510" stroke="url(#grad)" stroke-width="4"/>
+
+  <!-- 书本图标 -->
+  <g transform="translate(32, 36)">
+    <!-- 左页 -->
+    <path d="M 4 8 L 4 48 Q 16 44 28 48 L 28 8 Q 16 4 4 8 Z"
+          fill="none" stroke="url(#grad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- 右页 -->
+    <path d="M 32 8 L 32 48 Q 44 44 56 48 L 56 8 Q 44 4 32 8 Z"
+          fill="none" stroke="url(#grad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- 中线 -->
+    <line x1="30" y1="8" x2="30" y2="48" stroke="url(#grad)" stroke-width="2"/>
+    <!-- 放大镜 -->
+    <circle cx="48" cy="44" r="10" fill="none" stroke="url(#grad)" stroke-width="3"/>
+    <line x1="56" y1="52" x2="62" y2="58" stroke="url(#grad)" stroke-width="3" stroke-linecap="round"/>
+  </g>
+</svg>

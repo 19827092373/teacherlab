@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run dev:*)",
+      "Bash(timeout /t 3 /nobreak)",
+      "Bash(dir:*)",
+      "Bash(npm run build)",
+      "Bash(npm run lint)",
+      "Bash(git stash:*)",
+      "Bash(git checkout:*)",
+      "Bash(git rm:*)",
+      "Bash(robocopy:*)",
+      "Bash(xcopy:*)"
+    ]
+  }
+}

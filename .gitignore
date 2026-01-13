@@ -1,24 +1,24 @@
-# Git 相关
-.git/
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# 编辑器相关
-.cursor/
-*.cursorrule
+node_modules
+dist
+dist-ssr
+*.local
 
-# 文档和配置文件（不需要部署到服务器）
-*.md
-!教师实验室介绍稿.md
-*.conf
-*.sh
-
-# 其他工具文件夹（这些是独立的仓库）
-习题转ppt/
-背诵管理/
-错题统计/
-teacherelab/
-
-# 系统文件
-.user.ini
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
 .DS_Store
-Thumbs.db
-
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

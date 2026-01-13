@@ -42,24 +42,21 @@ jobs:
           username: root
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            # 先移除.user.ini文件（宝塔面板安全文件，阻止删除）
-            rm -f /www/wwwroot/teacherlab.cn/.user.ini
+            # 方法：直接覆盖文件，不删除目录
+            # 这样可以避免触及.user.ini等受保护的文件
 
-            # 清空目标目录
-            rm -rf /www/wwwroot/teacherlab.cn/*
-
-            # 移动构建文件到生产目录
-            cp -rf /tmp/dist/* /www/wwwroot/teacherlab.cn/
-
-            # 清理临时文件
-            rm -rf /tmp/dist
+            # 复制文件，直接覆盖（force）
+            cp -rf /tmp/dist/. /www/wwwroot/teacherlab.cn/
 
             # 清理不需要的文件
             rm -rf /www/wwwroot/teacherlab.cn/.github
 
-            # 设置权限（排除.user.ini）
-            find /www/wwwroot/teacherlab.cn -type f -exec chmod 644 {} \;
-            find /www/wwwroot/teacherlab.cn -type d -exec chmod 755 {} \;
+            # 设置权限（跳过无法修改的文件）
+            find /www/wwwroot/teacherlab.cn -type f ! -name ".user.ini" -exec chmod 644 {} \;
+            find /www/wwwroot/teacherlab.cn -type d ! -name ".user.ini" -exec chmod 755 {} \; 2>/dev/null || true
+
+            # 清理临时文件
+            rm -rf /tmp/dist
 
       - name: Restart Nginx
         uses: appleboy/ssh-action@master

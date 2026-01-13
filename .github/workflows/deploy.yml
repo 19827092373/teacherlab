@@ -24,6 +24,17 @@ jobs:
       - name: Build project
         run: npm run build
 
+      - name: Clean target directory
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: root
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            # 清空目标目录内容，但保留目录本身
+            rm -rf /www/wwwroot/teacherlab.cn/*
+            rm -rf /www/wwwroot/teacherlab.cn/.[!.]*
+
       - name: Deploy via SCP
         uses: appleboy/scp-action@master
         with:
@@ -32,7 +43,7 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           source: "dist/*"
           target: "/www/wwwroot/teacherlab.cn"
-          rm: true
+          rm: false
           overwrite: true
           strip_components: 1
 

@@ -24,37 +24,38 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Clean target directory
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SERVER_IP }}
-          username: root
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          script: |
-            # 清空目标目录内容，但保留目录本身
-            rm -rf /www/wwwroot/teacherlab.cn/*
-            rm -rf /www/wwwroot/teacherlab.cn/.[!.]*
-
-      - name: Deploy via SCP
+      - name: Copy build files to server
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.SERVER_IP }}
           username: root
           key: ${{ secrets.SERVER_SSH_KEY }}
-          source: "dist/*"
-          target: "/www/wwwroot/teacherlab.cn"
+          source: "dist"
+          target: "/tmp/"
           rm: false
-          overwrite: true
-          strip_components: 1
+          strip_components: 0
 
-      - name: Clean up .github folder on server
+      - name: Deploy to production directory
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SERVER_IP }}
           username: root
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
+            # 清空目标目录
+            rm -rf /www/wwwroot/teacherlab.cn/*
+
+            # 移动构建文件到生产目录
+            cp -rf /tmp/dist/* /www/wwwroot/teacherlab.cn/
+
+            # 清理临时文件
+            rm -rf /tmp/dist
+
+            # 清理不需要的文件
             rm -rf /www/wwwroot/teacherlab.cn/.github
+
+            # 设置权限
+            chmod -R 755 /www/wwwroot/teacherlab.cn
 
       - name: Restart Nginx
         uses: appleboy/ssh-action@master
@@ -63,4 +64,4 @@ jobs:
           username: root
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            nginx -s reload
+            nginx -t && nginx -s reload

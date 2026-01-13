@@ -1,9 +1,9 @@
-name: Deploy React Version to /new
+name: Deploy to Aliyun
 
 on:
   push:
     branches:
-      - react-version
+      - main
 
 jobs:
   build-and-deploy:
@@ -31,10 +31,19 @@ jobs:
           username: root
           key: ${{ secrets.SERVER_SSH_KEY }}
           source: "dist/*"
-          target: "/www/wwwroot/teacherlab.cn/new"
+          target: "/www/wwwroot/teacherlab.cn"
           rm: true
           overwrite: true
           strip_components: 1
+
+      - name: Clean up .github folder on server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: root
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            rm -rf /www/wwwroot/teacherlab.cn/.github
 
       - name: Restart Nginx
         uses: appleboy/ssh-action@master

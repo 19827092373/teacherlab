@@ -4,8 +4,8 @@ import react from '@vitejs/plugin-react';
 
 // https://vite.dev/config/
 export default defineConfig({
-  // 部署到 /new 子目录
-  base: '/new/',
+  // 部署到根目录
+  base: '/',
   server: {
     port: 5173,
     host: '0.0.0.0',

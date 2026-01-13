@@ -42,6 +42,9 @@ jobs:
           username: root
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
+            # 先移除.user.ini文件（宝塔面板安全文件，阻止删除）
+            rm -f /www/wwwroot/teacherlab.cn/.user.ini
+
             # 清空目标目录
             rm -rf /www/wwwroot/teacherlab.cn/*
 
@@ -54,8 +57,9 @@ jobs:
             # 清理不需要的文件
             rm -rf /www/wwwroot/teacherlab.cn/.github
 
-            # 设置权限
-            chmod -R 755 /www/wwwroot/teacherlab.cn
+            # 设置权限（排除.user.ini）
+            find /www/wwwroot/teacherlab.cn -type f -exec chmod 644 {} \;
+            find /www/wwwroot/teacherlab.cn -type d -exec chmod 755 {} \;
 
       - name: Restart Nginx
         uses: appleboy/ssh-action@master

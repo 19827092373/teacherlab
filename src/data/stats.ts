@@ -2,7 +2,7 @@ import { Stat } from '@/types/stats'
 
 export const stats: Stat[] = [
   {
-    number: 4,
+    number: 5,
     label: '实用工具',
     icon: '🛠️',
   },

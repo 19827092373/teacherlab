@@ -9,6 +9,7 @@ export interface Tool {
   isNew?: boolean
   isHot?: boolean
   isRecommended?: boolean
+  isBeta?: boolean
   gradient: string
   borderColor: string
   hoverShadow: string

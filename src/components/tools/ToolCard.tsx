@@ -27,8 +27,21 @@ export const ToolCard = ({ tool, index }: ToolCardProps) => {
         className="relative h-full flex flex-col min-h-[700px] overflow-visible"
         hoverShadow={tool.hoverShadow}
       >
+        {/* BETA Badge */}
+        {tool.isBeta && (
+          <motion.div
+            className="absolute top-4 right-4 z-10"
+            animate={{ scale: [1, 1.05, 1] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            <Badge variant="default" pulse className="from-slate-600 to-slate-700">
+              BETA
+            </Badge>
+          </motion.div>
+        )}
+
         {/* NEW Badge */}
-        {tool.isNew && (
+        {tool.isNew && !tool.isBeta && (
           <motion.div
             className="absolute top-4 right-4 z-10"
             animate={{ scale: [1, 1.05, 1] }}

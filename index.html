@@ -5,21 +5,41 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!--
+      ========================================================================
+      ⚠️ 维护说明：添加/删除工具时，需要同步更新以下位置
+      ========================================================================
+
+      1. 【此处】Meta 描述 - 更新工具数量和列表
+      2. 【此处】Meta 关键词 - 添加/删除工具关键词
+      3. 【下方】Open Graph 描述 - 更新工具数量和列表
+      4. 【下方】WebSite 结构化数据 - 更新描述
+      5. 【下方】ItemList 结构化数据 - 更新描述和 items 数组
+
+      当前工具数量：5 个
+      工具列表：PDF转PPT、背诵管理、错题统计、成绩分析、PDF智能切分
+
+      详细说明请参考：src/data/tools.ts
+      ========================================================================
+    -->
+
     <!-- 网站标题：教师实验室 -->
     <title>教师实验室 - 让教学更高效</title>
 
-    <!-- Meta描述 -->
+    <!-- Meta描述 【维护位置 1】 -->
     <meta
       name="description"
-      content="教师实验室 - 专为教师打造的免费在线工具平台，提供PDF转PPT、背诵管理、错题统计、成绩分析四大核心工具，让教学更高效"
+      content="教师实验室 - 专为教师打造的免费在线工具平台，提供PDF转PPT、背诵管理、错题统计、成绩分析、PDF智能切分五大核心工具，让教学更高效"
     />
-    <meta name="keywords" content="教师实验室, 教师工具, 教学辅助, PDF转PPT, 背诵管理, 错题统计, 成绩分析" />
+    <!-- Meta关键词 【维护位置 2】 -->
+    <meta name="keywords" content="教师实验室, 教师工具, 教学辅助, PDF转PPT, 背诵管理, 错题统计, 成绩分析, PDF切分" />
 
     <!-- Open Graph（社交媒体分享） -->
     <meta property="og:title" content="教师实验室 - 让教学更高效" />
+    <!-- Open Graph 描述 【维护位置 3】 -->
     <meta
       property="og:description"
-      content="专为教师打造的免费在线工具平台，四大核心工具（PDF转PPT、背诵管理、错题统计、成绩分析）提升教学效率"
+      content="专为教师打造的免费在线工具平台，五大核心工具（PDF转PPT、背诵管理、错题统计、成绩分析、PDF智能切分）提升教学效率"
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://teacherlab.top" />
@@ -36,6 +56,7 @@
     <meta name="theme-color" content="#050510" />
 
     <!-- 结构化数据 (JSON-LD) -->
+    <!-- WebSite 【维护位置 4】 -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -43,7 +64,7 @@
       "name": "教师实验室",
       "alternateName": "TeacherLab",
       "url": "https://teacherlab.top",
-      "description": "专为教师打造的免费在线工具平台，提供PDF转PPT、背诵管理、错题统计、成绩分析四大核心工具",
+      "description": "专为教师打造的免费在线工具平台，提供PDF转PPT、背诵管理、错题统计、成绩分析、PDF智能切分五大核心工具",
       "potentialAction": {
         "@type": "SearchAction",
         "target": "https://teacherlab.top/?search={search_term_string}",
@@ -64,12 +85,13 @@
     }
     </script>
 
+    <!-- ItemList 【维护位置 5】 -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "ItemList",
       "name": "教师工具列表",
-      "description": "教师实验室提供的四大核心工具",
+      "description": "教师实验室提供的五大核心工具",
       "itemListElement": [
         {
           "@type": "SoftwareApplication",
@@ -117,6 +139,19 @@
           "url": "https://data.teacherlab.cn",
           "applicationCategory": "EducationalApplication",
           "description": "导入Excel成绩表，智能生成多维度分析报告",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "CNY"
+          }
+        },
+        {
+          "@type": "SoftwareApplication",
+          "position": 5,
+          "name": "智能 PDF 切分工具",
+          "url": "https://pdf.teacherlab.cn",
+          "applicationCategory": "EducationalApplication",
+          "description": "基于 AI 视觉模型的智能 PDF 切分工具，自动识别目录并按章节切分",
           "offers": {
             "@type": "Offer",
             "price": "0",

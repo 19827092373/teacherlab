@@ -82,8 +82,26 @@ export const ToolCardSmall = ({ tool, index, onClick }: ToolCardSmallProps) => {
         </motion.button>
       </div>
 
+      {/* BETA 标签 */}
+      {tool.isBeta && (
+        <motion.div
+          className="absolute top-3 right-3"
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.4 }}
+        >
+          <motion.span
+            className="inline-block px-2 py-0.5 rounded-md text-xs font-bold bg-gradient-to-r from-slate-600 to-slate-700 text-white"
+            animate={{ scale: [1, 1.05, 1] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            BETA
+          </motion.span>
+        </motion.div>
+      )}
+
       {/* NEW 标签 */}
-      {tool.isNew && (
+      {tool.isNew && !tool.isBeta && (
         <motion.div
           className="absolute top-3 right-3"
           initial={{ scale: 0 }}
@@ -101,7 +119,7 @@ export const ToolCardSmall = ({ tool, index, onClick }: ToolCardSmallProps) => {
       )}
 
       {/* HOT 标签 */}
-      {tool.isHot && !tool.isNew && (
+      {tool.isHot && !tool.isNew && !tool.isBeta && (
         <motion.div
           className="absolute top-3 right-3"
           initial={{ scale: 0 }}
@@ -119,7 +137,7 @@ export const ToolCardSmall = ({ tool, index, onClick }: ToolCardSmallProps) => {
       )}
 
       {/* RECOMMENDED 标签 */}
-      {tool.isRecommended && !tool.isNew && !tool.isHot && (
+      {tool.isRecommended && !tool.isNew && !tool.isHot && !tool.isBeta && (
         <motion.div
           className="absolute top-3 right-3"
           initial={{ scale: 0 }}

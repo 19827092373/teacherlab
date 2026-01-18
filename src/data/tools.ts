@@ -1,5 +1,21 @@
 import { Tool } from '@/types'
 
+/**
+ * 工具列表数据
+ *
+ * ⚠️ 添加/删除工具时，需要同步更新以下位置：
+ *
+ * 1. index.html (Meta 描述) - 搜索 "四大/五大核心工具"
+ * 2. index.html (keywords) - 搜索 "教师工具, 教学辅助..."
+ * 3. index.html (Open Graph) - 搜索 "og:description"
+ * 4. index.html (WebSite 结构化数据) - 搜索 "四大/五大核心工具"
+ * 5. index.html (ItemList 结构化数据) - 搜索 "itemListElement"
+ * 6. index.html (ItemList items) - 在 itemListElement 数组中添加/删除工具项
+ *
+ * 快速定位命令：
+ * - 在 index.html 中搜索关键词："核心工具" 或 "itemListElement"
+ */
+
 export const tools: Tool[] = [
   {
     id: 'pdf-to-ppt',
@@ -139,6 +155,42 @@ export const tools: Tool[] = [
       { number: 3, content: '查看班级整体分析报告' },
       { number: 4, content: '浏览学生个人成绩详情' },
       { number: 5, content: '导出分析报告和图表' },
+    ],
+  },
+  {
+    id: 'pdf-splitter',
+    title: '智能 PDF 切分工具',
+    description:
+      '基于 AI 视觉模型的智能 PDF 切分工具。自动识别扫描版 PDF 的目录，将每一节课智能切分成单独的 PDF 文件。支持 OpenAI、Claude、智谱等多种 AI 模型，提供可视化预览和人工校对功能。',
+    link: 'https://pdf.teacherlab.cn',
+    icon: 'Scissors',
+    tags: ['PDF处理', 'AI识别', '智能切分'],
+    userCount: '50+',
+    isBeta: true,
+    gradient: 'from-amber-500 to-orange-600',
+    borderColor: 'border-amber-200',
+    hoverShadow: '0 0 40px rgba(245, 158, 11, 0.3)',
+    scenario: {
+      title: '💡 使用场景',
+      content:
+        '当您有一整本扫描版 PDF 教材需要按章节分发给学生时，只需上传 PDF，AI 会自动识别目录结构并按课程章节切分成独立的 PDF 文件。支持人工校对识别结果，一键下载 ZIP 包，让教材分发变得轻松高效！',
+    },
+    features: [
+      { icon: 'Eye', text: '可视化配置 AI 参数' },
+      { icon: 'Brain', text: 'AI 视觉模型智能识别' },
+      { icon: 'Layout', text: 'PDF 预览和目录定位' },
+      { icon: 'FileEdit', text: '交互式表格校对结果' },
+      { icon: 'Calculator', text: '自动计算页码偏移' },
+      { icon: 'Package', text: 'ZIP 打包一键下载' },
+      { icon: 'Cpu', text: '多 AI 模型支持' },
+      { icon: 'CheckCircle', text: '所见即所得操作' },
+    ],
+    steps: [
+      { number: 1, content: '配置 AI 服务商和 API Key' },
+      { number: 2, content: '上传扫描版 PDF 教材文件' },
+      { number: 3, content: '设置目录页码范围和偏移量' },
+      { number: 4, content: 'AI 识别目录并校对结果' },
+      { number: 5, content: '一键切分并下载 ZIP 包' },
     ],
   },
 ]

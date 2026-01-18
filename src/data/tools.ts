@@ -5,15 +5,18 @@ import { Tool } from '@/types'
  *
  * ⚠️ 添加/删除工具时，需要同步更新以下位置：
  *
- * 1. index.html (Meta 描述) - 搜索 "四大/五大核心工具"
- * 2. index.html (keywords) - 搜索 "教师工具, 教学辅助..."
- * 3. index.html (Open Graph) - 搜索 "og:description"
- * 4. index.html (WebSite 结构化数据) - 搜索 "四大/五大核心工具"
- * 5. index.html (ItemList 结构化数据) - 搜索 "itemListElement"
- * 6. index.html (ItemList items) - 在 itemListElement 数组中添加/删除工具项
+ * 1. src/data/stats.ts - 更新"实用工具"数量（number: 5）
+ * 2. index.html (Meta 描述) - 搜索 "四大/五大核心工具"
+ * 3. index.html (keywords) - 搜索 "教师工具, 教学辅助..."
+ * 4. index.html (Open Graph) - 搜索 "og:description"
+ * 5. index.html (WebSite 结构化数据) - 搜索 "四大/五大核心工具"
+ * 6. index.html (ItemList 结构化数据) - 搜索 "itemListElement"
+ * 7. index.html (ItemList items) - 在 itemListElement 数组中添加/删除工具项
+ * 8. PROJECT_STRUCTURE.md - 更新项目结构文档中的工具数量
  *
  * 快速定位命令：
  * - 在 index.html 中搜索关键词："核心工具" 或 "itemListElement"
+ * - 在 stats.ts 中搜索："实用工具"
  */
 
 export const tools: Tool[] = [

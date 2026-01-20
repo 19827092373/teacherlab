@@ -5,8 +5,8 @@ import { Tool } from '@/types'
  *
  * ⚠️ 添加/删除工具时，需要同步更新以下位置：
  *
- * 1. src/data/stats.ts - 更新"实用工具"数量（number: 5）
- * 2. index.html (Meta 描述) - 搜索 "四大/五大核心工具"
+ * 1. src/data/stats.ts - 更新"实用工具"数量（number: 6）
+ * 2. index.html (Meta 描述) - 搜索 "五大/六大核心工具"
  * 3. index.html (keywords) - 搜索 "教师工具, 教学辅助..."
  * 4. index.html (Open Graph) - 搜索 "og:description"
  * 5. index.html (WebSite 结构化数据) - 搜索 "四大/五大核心工具"
@@ -194,6 +194,43 @@ export const tools: Tool[] = [
       { number: 3, content: '设置目录页码范围和偏移量' },
       { number: 4, content: 'AI 识别目录并校对结果' },
       { number: 5, content: '一键切分并下载 ZIP 包' },
+    ],
+  },
+  {
+    id: 'commenter',
+    title: 'AI 学生评语助手',
+    description:
+      '通过 AI 技术为教师快速生成个性化、有温度的期末评语。支持批量处理、特征标签系统、Excel 导入导出，让评语写作效率提升 10 倍！',
+    link: 'https://recitation.teacherlab.cn/commenter',
+    icon: 'MessageSquare',
+    tags: ['评语生成', 'AI 驱动', '批量处理'],
+    userCount: '100+',
+    isNew: true,
+    isRecommended: true,
+    gradient: 'from-violet-500 to-purple-600',
+    borderColor: 'border-violet-200',
+    hoverShadow: '0 0 40px rgba(139, 92, 246, 0.3)',
+    scenario: {
+      title: '💡 使用场景',
+      content:
+        '每学期末需要为全班学生撰写评语时，只需导入学生名单，设置特征标签，AI 即可批量生成个性化评语。评语自然流畅、富有感情，融入诗词名言，拒绝套路，让评语写作从数小时缩短至数分钟！',
+    },
+    features: [
+      { icon: 'Users', text: '批量导入学生名单' },
+      { icon: 'Tags', text: '特征标签系统' },
+      { icon: 'Sparkles', text: 'AI 批量生成评语' },
+      { icon: 'FileEdit', text: '评语手动编辑优化' },
+      { icon: 'Download', text: '导出 Excel 评语表' },
+      { icon: 'Settings', text: '自定义评语模板' },
+      { icon: 'Shield', text: '数据本地安全存储' },
+      { icon: 'RotateCcw', text: '支持重新生成' },
+    ],
+    steps: [
+      { number: 1, content: '配置 AI 模型 API（DeepSeek/OpenAI）' },
+      { number: 2, content: '导入学生名单（文本/Excel）' },
+      { number: 3, content: '设置学生特征标签和成绩档位' },
+      { number: 4, content: '一键批量生成个性化评语' },
+      { number: 5, content: '编辑优化并导出 Excel' },
     ],
   },
 ]

@@ -19,9 +19,20 @@ export interface Tool {
   }
   features: Feature[]
   steps: Step[]
+  variants?: ToolVariant[]
+}
+
+export interface ToolVariant {
+  id: string
+  title: string
+  description: string
+  link: string
+  icon: string
+  color: 'green' | 'blue' | 'purple' | 'orange' | 'red' | 'indigo'
 }
 
 export interface Feature {
+
   icon: string
   text: string
 }

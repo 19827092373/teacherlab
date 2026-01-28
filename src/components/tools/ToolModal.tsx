@@ -6,8 +6,10 @@ import { ToolScenario } from './ToolScenario'
 import { ToolSteps } from './ToolSteps'
 import { Button } from '@/components/ui/Button'
 import { useState, useEffect } from 'react'
+import { cn } from '@/utils/cn'
 
 interface ToolModalProps {
+
   tool: Tool | null
   isOpen: boolean
   onClose: () => void
@@ -216,31 +218,90 @@ export const ToolModal = ({ tool, isOpen, onClose }: ToolModalProps) => {
                       </motion.div>
                     </AnimatePresence>
 
-                    {/* 底部按钮 */}
+                    {/* 底部按钮或模式选择 */}
                     <motion.div
-                      className="flex flex-col sm:flex-row gap-4 mt-8 pt-8 border-t border-glass-border"
+                      className="mt-8 pt-8 border-t border-glass-border"
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.6 }}
                     >
-                      <Button
-                        variant="primary"
-                        href={tool.link}
-                        className="flex-1 text-lg"
-                        size="lg"
-                      >
-                        立即使用 →
-                      </Button>
+                      {tool.variants && tool.variants.length > 0 ? (
+                        <div className="flex flex-col gap-6">
+                          <h3 className="text-xl font-bold text-text-primary flex items-center gap-2">
+                            <span className="w-1.5 h-6 bg-neon-blue rounded-full shadow-[0_0_10px_rgba(0,184,212,0.5)]" />
+                            选择启动模式
+                          </h3>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {tool.variants.map(variant => {
+                              const VariantIcon = icons[variant.icon as keyof typeof icons] as LucideIcon
+                              return (
+                                <button
+                                  key={variant.id}
+                                  onClick={() => window.open(variant.link, '_blank')}
+                                  className={cn(
+                                    "flex flex-col p-6 rounded-2xl border transition-all duration-300 text-left group relative overflow-hidden",
+                                    variant.color === 'orange' ? "bg-orange-500/10 border-orange-500/30 hover:border-orange-500 hover:shadow-[0_0_30px_rgba(249,115,22,0.2)]" :
+                                    variant.color === 'red' ? "bg-red-500/10 border-red-500/30 hover:border-red-500 hover:shadow-[0_0_30px_rgba(239,68,68,0.2)]" :
+                                    "bg-neon-blue/10 border-neon-blue/30 hover:border-neon-blue hover:shadow-[0_0_30px_rgba(0,184,212,0.2)]"
+                                  )}
+                                >
+                                  <div className="flex items-center gap-4 mb-3">
+                                    <div className={cn(
+                                      "w-12 h-12 rounded-xl flex items-center justify-center border shadow-sm transition-transform group-hover:scale-110",
+                                      variant.color === 'orange' ? "bg-orange-500/20 border-orange-500/40 text-orange-500" :
+                                      variant.color === 'red' ? "bg-red-500/20 border-red-500/40 text-red-500" :
+                                      "bg-neon-blue/20 border-neon-blue/40 text-neon-blue"
+                                    )}>
+                                      {VariantIcon && <VariantIcon className="w-6 h-6" />}
+                                    </div>
+                                    <div className="font-bold text-lg text-text-primary group-hover:text-white transition-colors">
+                                      {variant.title}
+                                    </div>
+                                  </div>
+                                  <p className="text-sm text-text-muted group-hover:text-text-secondary leading-relaxed">
+                                    {variant.description}
+                                  </p>
+                                  <div className="mt-4 flex items-center gap-2 text-xs font-black uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
+                                    立即启动 <span className="text-lg">→</span>
+                                  </div>
+                                  {/* Glow effect on hover */}
+                                  <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity" />
+                                </button>
+                              )
+                            })}
+                          </div>
+                          <Button
+                            variant="secondary"
+                            onClick={onClose}
+                            className="w-full text-lg mt-2"
+                            size="lg"
+                          >
+                            以后再说
+                          </Button>
+                        </div>
+                      ) : (
+                        <div className="flex flex-col sm:flex-row gap-4">
+                          <Button
+                            variant="primary"
+                            href={tool.link}
+                            className="flex-1 text-lg"
+                            size="lg"
+                          >
+                            立即使用 →
+                          </Button>
 
-                      <Button
-                        variant="secondary"
-                        onClick={onClose}
-                        className="flex-1 text-lg"
-                        size="lg"
-                      >
-                        关闭详情
-                      </Button>
+                          <Button
+                            variant="secondary"
+                            onClick={onClose}
+                            className="flex-1 text-lg"
+                            size="lg"
+                          >
+                            关闭详情
+                          </Button>
+                        </div>
+                      )}
                     </motion.div>
+
                   </div>
                 </motion.div>
               </motion.div>

@@ -52,8 +52,9 @@ function App() {
                 key={tool.id}
                 tool={tool}
                 index={index}
-                onClick={() => handleCardClick(tool)}
+                onShowDetail={() => handleCardClick(tool)}
               />
+
             ))}
           </div>
         </div>

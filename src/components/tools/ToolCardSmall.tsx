@@ -5,12 +5,25 @@ import { LucideIcon, icons } from 'lucide-react'
 interface ToolCardSmallProps {
   tool: Tool
   index: number
-  onClick: () => void
+  onShowDetail: () => void
 }
 
-export const ToolCardSmall = ({ tool, index, onClick }: ToolCardSmallProps) => {
+export const ToolCardSmall = ({ tool, index, onShowDetail }: ToolCardSmallProps) => {
   // 动态获取 Lucide 图标
   const IconComponent = icons[tool.icon as keyof typeof icons] as LucideIcon
+
+  const handleCardClick = () => {
+    if (tool.variants && tool.variants.length > 0) {
+      onShowDetail()
+    } else {
+      window.open(tool.link, '_blank')
+    }
+  }
+
+  const handleDetailClick = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    onShowDetail()
+  }
 
   return (
     <motion.div
@@ -24,8 +37,9 @@ export const ToolCardSmall = ({ tool, index, onClick }: ToolCardSmallProps) => {
         boxShadow: '0 0 40px rgba(0, 255, 65, 0.3)',
       }}
       whileTap={{ scale: 0.98 }}
-      onClick={onClick}
+      onClick={handleCardClick}
     >
+
       {/* 悬停发光效果 */}
       <motion.div
         className="absolute inset-0 bg-gradient-to-br from-neon-green/5 to-neon-blue/5 rounded-2xl"
@@ -65,12 +79,13 @@ export const ToolCardSmall = ({ tool, index, onClick }: ToolCardSmallProps) => {
 
         {/* 查看详情按钮 - 按钮样式 */}
         <motion.button
-          className="mt-6 w-full py-2.5 rounded-xl border border-neon-green/30 bg-neon-green/5 text-neon-green text-sm font-bold flex items-center justify-center gap-2 group-hover:bg-neon-green/10 transition-colors"
+          className="mt-6 w-full py-2.5 rounded-xl border border-neon-green/30 bg-neon-green/5 text-neon-green text-sm font-bold flex items-center justify-center gap-2 hover:bg-neon-green/10 transition-colors z-20 relative"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
+          onClick={handleDetailClick}
         >
           查看详情
           <motion.span
@@ -81,6 +96,7 @@ export const ToolCardSmall = ({ tool, index, onClick }: ToolCardSmallProps) => {
           </motion.span>
         </motion.button>
       </div>
+
 
       {/* BETA 标签 */}
       {tool.isBeta && (
